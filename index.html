@@ -3,1722 +3,784 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dhairya's Plan</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<title>Dhairya Desai</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700;900&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --cream:       #FDFAF4;
-  --parchment:   #F5EDD8;
-  --parchment2:  #EDE1C4;
-  --parchment3:  #E4D5B0;
-  --navy:        #152240;
-  --navy2:       #1E3158;
-  --gold:        #A8841E;
-  --gold2:       #C9A84C;
-  --gold3:       #E8C96A;
-  --gold-light:  rgba(168,132,30,0.08);
-  --burgundy:    #5C1A25;
-  --burgundy2:   #7A2535;
-  --forest:      #1E4A30;
-  --ink:         #18140C;
-  --ink2:        #2E2818;
-  --ink3:        #5C5240;
-  --ink4:        #8C7D68;
-  --rule-gold:   rgba(168,132,30,0.22);
-  --rule-navy:   rgba(21,34,64,0.10);
-  --page-w:      880px;
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9922A;--gold-light:#FFD166;--gold-pale:#f5e6c0;
+  --black:#04040a;--black2:#07070f;--cream:#FAF6EE;--cream2:#F0E8D5;
+  --text:#1a1408;--muted:#7a6a4a;
+  --serif:'Cormorant Garamond',serif;--royal:'Cinzel',serif;--sans:'Raleway',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--cream);font-family:var(--serif);overflow-x:hidden}
+
+/* ══ INTRO ══ */
+#intro{
+  position:fixed;inset:0;z-index:9999;background:var(--black);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;pointer-events:none;
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+#intro-name{
+  font-family:var(--royal);
+  font-size:clamp(36px,7vw,82px);
+  font-weight:700;letter-spacing:.12em;
+  color:var(--cream);
+  opacity:0;transform:translateY(18px);
+  animation:nameIn 1.1s cubic-bezier(.22,.61,.36,1) 0.3s forwards;
+}
+@keyframes nameIn{
+  to{opacity:1;transform:translateY(0)}
+}
 
-body {
-  background: #DDD5C0;
+#intro-line{
+  width:0;height:1.5px;
+  background:linear-gradient(to right,transparent,var(--gold-light),var(--gold),var(--gold-light),transparent);
+  margin-top:18px;
+  animation:lineGrow 0.9s cubic-bezier(.22,.61,.36,1) 1.2s forwards;
+  box-shadow:0 0 12px rgba(255,209,102,.5);
+}
+@keyframes lineGrow{
+  to{width:min(560px,72vw)}
+}
+
+/* Fade everything out then reveal site */
+#intro.fadeout{
+  animation:introOut 0.9s cubic-bezier(.76,0,.24,1) forwards;
+}
+@keyframes introOut{
+  0%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(1.03);pointer-events:none;visibility:hidden}
+}
+
+/* ══ SITE ══ */
+#site{opacity:0;animation:siteIn 1s ease 3.2s forwards}
+@keyframes siteIn{to{opacity:1}}
+
+/* ══ HERO ══ */
+#hero{
+  min-height:100vh;background:var(--black);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;padding:60px 20px;text-align:center;
+}
+#hero::before{
+  content:'';position:absolute;
+  width:800px;height:800px;
+  background:radial-gradient(ellipse,rgba(201,146,42,.09) 0%,transparent 68%);
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+}
+
+/* subtle star-field texture */
+#hero::after{
+  content:'';position:absolute;inset:0;
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% 0%,  rgba(168,132,30,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(92,26,37,0.06)  0%, transparent 60%);
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 16px;
-  line-height: 1.85;
-  color: var(--ink);
-  min-height: 100vh;
-  padding: 40px 16px 80px;
-}
-
-/* ═══════════════════════════════════════
-   PAGE CONTAINER
-═══════════════════════════════════════ */
-.page {
-  max-width: var(--page-w);
-  margin: 0 auto;
-  background: var(--cream);
-  position: relative;
-  box-shadow:
-    0 2px  4px  rgba(0,0,0,0.06),
-    0 8px  24px rgba(0,0,0,0.10),
-    0 32px 80px rgba(0,0,0,0.12);
-}
-
-/* Triple border frame — outermost to innermost */
-.frame-outer {
-  position: absolute;
-  inset: 14px;
-  border: 1px solid rgba(168,132,30,0.30);
-  pointer-events: none;
-  z-index: 10;
-}
-.frame-inner {
-  position: absolute;
-  inset: 18px;
-  border: 1px solid rgba(168,132,30,0.12);
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Corner flourishes */
-.corner { position:absolute; width:28px; height:28px; z-index:11; }
-.corner svg { width:100%; height:100%; }
-.corner.tl { top:8px;  left:8px;  }
-.corner.tr { top:8px;  right:8px; transform: scaleX(-1); }
-.corner.bl { bottom:8px; left:8px;  transform: scaleY(-1); }
-.corner.br { bottom:8px; right:8px; transform: scale(-1,-1); }
-
-.content {
-  position: relative;
-  z-index: 1;
-  padding: 64px 72px 80px;
-}
-
-/* ═══════════════════════════════════════
-   HERO
-═══════════════════════════════════════ */
-.hero {
-  text-align: center;
-  padding-bottom: 52px;
-  margin-bottom: 56px;
-  position: relative;
-}
-
-/* Double rule below hero */
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--gold2) 30%, var(--gold2) 70%, transparent 100%);
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  bottom: 4px; left: 80px; right: 80px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(168,132,30,0.25), transparent);
-}
-
-.hero-top-ornament {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 13px;
-  color: var(--gold2);
-  letter-spacing: 20px;
-  margin-bottom: 24px;
-  opacity: 0.7;
-}
-
-.hero-eyebrow {
-  font-family: 'Cinzel', serif;
-  font-size: 8.5px;
-  letter-spacing: 6px;
-  color: var(--gold);
-  margin-bottom: 20px;
-  text-transform: uppercase;
-}
-
-.hero-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(32px, 5.5vw, 54px);
-  font-weight: 700;
-  color: var(--navy);
-  letter-spacing: 2px;
-  line-height: 1.2;
-  margin-bottom: 10px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
-}
-
-.hero-title .accent { color: var(--gold); }
-
-.hero-rule {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 22px auto;
-  max-width: 480px;
-}
-.hero-rule::before, .hero-rule::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--gold2);
-  opacity: 0.5;
-}
-.hero-rule-center {
-  font-size: 11px;
-  color: var(--gold2);
-  letter-spacing: 8px;
-}
-
-.hero-subtitle {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 19px;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--ink3);
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-}
-
-.hero-tag {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 4px;
-  color: var(--ink4);
-  margin-top: 18px;
-}
-
-/* ═══════════════════════════════════════
-   SECTION HEADING
-═══════════════════════════════════════ */
-.sec {
-  margin-bottom: 36px;
-  margin-top: 52px;
-}
-
-.sec:first-of-type { margin-top: 0; }
-
-.sec-head {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  margin-bottom: 28px;
-}
-
-.sec-badge {
-  font-family: 'Cinzel', serif;
-  font-size: 7.5px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  writing-mode: horizontal-tb;
-  padding: 10px 14px;
-  background: var(--navy);
-  color: var(--parchment);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  min-width: 70px;
-}
-
-.sec-badge.gold  { background: var(--gold);      color: var(--cream); }
-.sec-badge.burg  { background: var(--burgundy);  color: var(--parchment); }
-.sec-badge.forest{ background: var(--forest);    color: var(--parchment); }
-
-.sec-title-wrap {
-  flex: 1;
-  padding: 12px 20px;
-  border-top: 1px solid var(--rule-gold);
-  border-right: 1px solid var(--rule-gold);
-  border-bottom: 1px solid var(--rule-gold);
-  background: linear-gradient(90deg, var(--parchment) 0%, var(--cream) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-}
-
-.sec-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(13px, 2vw, 17px);
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--navy);
-}
-
-.sec-title.gold { color: var(--gold); }
-.sec-title.burg { color: var(--burgundy); }
-.sec-title.forest { color: var(--forest); }
-
-.sec-meta {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 13px;
-  font-style: italic;
-  color: var(--ink4);
-  letter-spacing: 0.5px;
-}
-
-/* ═══════════════════════════════════════
-   STAT BAR
-═══════════════════════════════════════ */
-.stat-bar {
-  display: flex;
-  flex-wrap: wrap;
-  border: 1px solid var(--rule-gold);
-  margin-bottom: 20px;
-  background: var(--parchment);
-}
-
-.stat-cell {
-  flex: 1;
-  min-width: 130px;
-  padding: 9px 16px;
-  border-right: 1px solid var(--rule-gold);
-  position: relative;
-}
-
-.stat-cell:last-child { border-right: none; }
-
-.stat-label {
-  font-family: 'Cinzel', serif;
-  font-size: 7px;
-  letter-spacing: 3px;
-  color: var(--ink4);
-  text-transform: uppercase;
-  margin-bottom: 3px;
-}
-
-.stat-value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15.5px;
-  font-weight: 600;
-  color: var(--navy);
-  line-height: 1.3;
-}
-
-.stat-value.gold    { color: var(--gold); }
-.stat-value.burg    { color: var(--burgundy); }
-.stat-value.forest  { color: var(--forest); }
-
-/* ═══════════════════════════════════════
-   MISSION CALLOUT
-═══════════════════════════════════════ */
-.mission {
-  position: relative;
-  padding: 13px 20px 13px 24px;
-  margin-bottom: 20px;
-  background: linear-gradient(90deg, rgba(168,132,30,0.07), rgba(168,132,30,0.02));
-  border-left: 3px solid var(--gold2);
-}
-
-.mission::before {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0; left: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--gold3), var(--gold), var(--gold3));
-}
-
-.mission p {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 17.5px;
-  font-weight: 500;
-  font-style: italic;
-  color: var(--navy2);
-  letter-spacing: 0.2px;
-}
-
-.mission.burg {
-  background: linear-gradient(90deg, rgba(92,26,37,0.06), rgba(92,26,37,0.01));
-  border-left-color: var(--burgundy2);
-}
-.mission.burg::before { background: linear-gradient(180deg, var(--burgundy2), var(--burgundy), var(--burgundy2)); }
-.mission.burg p { color: var(--burgundy); }
-
-/* ═══════════════════════════════════════
-   SUBSECTION LABEL
-═══════════════════════════════════════ */
-.sub {
-  margin-bottom: 20px;
-  margin-top: 22px;
-}
-
-.sub-head {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 3.5px;
-  text-transform: uppercase;
-  color: var(--gold);
-  padding-bottom: 7px;
-  margin-bottom: 12px;
-  border-bottom: 1px solid var(--rule-gold);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sub-head::before { content: '✦'; font-size: 6px; opacity: 0.7; }
-.sub-head.navy   { color: var(--navy); }
-.sub-head.burg   { color: var(--burgundy); }
-.sub-head.forest { color: var(--forest); }
-
-/* ═══════════════════════════════════════
-   BULLET LISTS
-═══════════════════════════════════════ */
-ul.list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-ul.list li {
-  display: flex;
-  gap: 13px;
-  font-size: 15.5px;
-  line-height: 1.75;
-  padding: 1px 0;
-}
-
-ul.list li::before {
-  content: '◆';
-  color: var(--gold2);
-  font-size: 6.5px;
-  margin-top: 8px;
-  flex-shrink: 0;
-}
-
-ul.list.navy   li::before { color: var(--navy2); content: '▸'; font-size: 9px; margin-top: 5px; }
-ul.list.burg   li::before { color: var(--burgundy2); }
-ul.list.check  li::before { content: '✓'; color: var(--forest); font-size: 11px; margin-top: 3px; }
-ul.list.cross  li::before { content: '✗'; color: var(--burgundy); font-size: 11px; margin-top: 3px; }
-
-ul.list li strong { color: var(--navy); font-weight: 600; }
-ul.list li em { font-style: italic; color: var(--ink3); }
-
-/* ═══════════════════════════════════════
-   GOLD DIVIDER
-═══════════════════════════════════════ */
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 44px 0;
-}
-.divider::before, .divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold2), transparent);
-  opacity: 0.5;
-}
-.divider-inner {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--gold2);
-  font-size: 9px;
-  letter-spacing: 10px;
-  opacity: 0.7;
-}
-
-/* ═══════════════════════════════════════
-   WEALTH TRACK
-═══════════════════════════════════════ */
-.wealth-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(168,132,30,0.08);
-}
-
-.wealth-row:last-child { border-bottom: none; }
-
-.w-age {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 2px;
-  color: var(--ink4);
-  width: 68px;
-  flex-shrink: 0;
-}
-
-.w-track {
-  flex: 1;
-  height: 2px;
-  background: rgba(168,132,30,0.12);
-  position: relative;
-  overflow: visible;
-}
-
-.w-fill {
-  position: absolute;
-  left: 0; top: 0; height: 100%;
-  background: linear-gradient(90deg, var(--navy2), var(--gold2));
-}
-
-.w-dot {
-  position: absolute;
-  right: -3px; top: -3px;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--gold2);
-  border: 1.5px solid var(--cream);
-}
-
-.w-val {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--gold);
-  text-align: right;
-  width: 168px;
-  flex-shrink: 0;
-}
-
-/* ═══════════════════════════════════════
-   MILESTONE GRID
-═══════════════════════════════════════ */
-.milestones {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--rule-gold);
-  border: 1px solid var(--rule-gold);
-  margin: 24px 0;
-}
-
-.milestone {
-  background: var(--cream);
-  padding: 16px 12px;
-  text-align: center;
-  transition: background 0.2s;
-}
-
-.milestone:hover { background: var(--parchment); }
-
-.m-age {
-  font-family: 'Cinzel', serif;
-  font-size: 7.5px;
-  letter-spacing: 3px;
-  color: var(--ink4);
-  margin-bottom: 5px;
-}
-
-.m-val {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--navy);
-}
-
-/* ═══════════════════════════════════════
-   RULES TABLE
-═══════════════════════════════════════ */
-.rules {
-  border: 1px solid var(--rule-gold);
-  overflow: hidden;
-}
-
-.rule-row {
-  display: flex;
-  align-items: stretch;
-  border-bottom: 1px solid rgba(168,132,30,0.1);
-}
-.rule-row:last-child { border-bottom: none; }
-
-.rule-tag {
-  font-family: 'Cinzel', serif;
-  font-size: 7px;
-  letter-spacing: 2px;
-  width: 72px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid var(--rule-gold);
-  padding: 11px 8px;
-  text-align: center;
-}
-
-.rule-row.never .rule-tag  { background: rgba(92,26,37,0.06);  color: var(--burgundy); }
-.rule-row.always .rule-tag { background: rgba(30,74,48,0.06);  color: var(--forest); }
-
-.rule-text {
-  padding: 11px 18px;
-  font-size: 15px;
-  line-height: 1.65;
-  flex: 1;
-}
-
-.rule-row.never  { background: rgba(92,26,37,0.015); }
-.rule-row.always { background: rgba(30,74,48,0.015); }
-
-/* ═══════════════════════════════════════
-   ACCELERATORS
-═══════════════════════════════════════ */
-.accelerators {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--rule-gold);
-  border: 1px solid var(--rule-gold);
-  margin: 20px 0;
-}
-
-.acc {
-  background: var(--cream);
-  padding: 28px 20px;
-  text-align: center;
-  position: relative;
-}
-
-.acc::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 20px; right: 20px;
-  height: 2px;
-  background: var(--rule-gold);
-}
-
-.acc.i::before  { background: linear-gradient(90deg, transparent, var(--navy), transparent); }
-.acc.ii::before { background: linear-gradient(90deg, transparent, var(--gold2), transparent); }
-.acc.iii::before{ background: linear-gradient(90deg, transparent, var(--burgundy), transparent); }
-
-.acc-num {
-  font-family: 'Cinzel', serif;
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--rule-gold);
-  margin-bottom: 10px;
-  line-height: 1;
-}
-.acc.i   .acc-num { color: rgba(21,34,64,0.15); }
-.acc.ii  .acc-num { color: rgba(168,132,30,0.2); }
-.acc.iii .acc-num { color: rgba(92,26,37,0.15); }
-
-.acc-title {
-  font-family: 'Cinzel', serif;
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.acc.i   .acc-title { color: var(--navy); }
-.acc.ii  .acc-title { color: var(--gold); }
-.acc.iii .acc-title { color: var(--burgundy); }
-
-.acc-desc {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-style: italic;
-  color: var(--ink3);
-  line-height: 1.65;
-}
-
-/* ═══════════════════════════════════════
-   PASSPORT
-═══════════════════════════════════════ */
-.passports {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin: 20px 0;
-}
-
-.passport {
-  padding: 28px 24px;
-  text-align: center;
-  position: relative;
-  background: var(--parchment);
-}
-
-.passport.au {
-  border: 1px solid rgba(21,34,64,0.25);
-}
-.passport.au::before {
-  content: '';
-  position: absolute;
-  inset: 5px;
-  border: 1px solid rgba(21,34,64,0.08);
-  pointer-events: none;
-}
-
-.passport.ae {
-  border: 1px solid rgba(168,132,30,0.35);
-}
-.passport.ae::before {
-  content: '';
-  position: absolute;
-  inset: 5px;
-  border: 1px solid rgba(168,132,30,0.12);
-  pointer-events: none;
-}
-
-.p-flag  { font-size: 38px; margin-bottom: 12px; }
-.p-name  {
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.passport.au .p-name { color: var(--navy); }
-.passport.ae .p-name { color: var(--gold); }
-
-.p-desc {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14.5px;
-  font-style: italic;
-  color: var(--ink3);
-  line-height: 1.6;
-}
-
-/* ═══════════════════════════════════════
-   ASSET TABLE
-═══════════════════════════════════════ */
-.assets {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 16px 0;
-}
-.assets tr {
-  border-bottom: 1px solid rgba(168,132,30,0.1);
-}
-.assets tr:last-child {
-  border-top: 2px solid var(--gold);
-  border-bottom: none;
-}
-.assets td {
-  padding: 11px 4px;
-  font-size: 15px;
-  line-height: 1.5;
-}
-.assets td:last-child {
-  text-align: right;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--gold);
-}
-.assets tr:last-child td:first-child {
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: var(--navy);
-}
-.assets tr:last-child td:last-child {
-  font-size: 18px;
-  color: var(--navy);
-}
-
-/* ═══════════════════════════════════════
-   CERT ROWS
-═══════════════════════════════════════ */
-.cert-row {
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(168,132,30,0.08);
-}
-.cert-row:last-child { border-bottom: none; }
-.cert-age {
-  font-family: 'Cinzel', serif;
-  font-size: 7.5px;
-  letter-spacing: 2px;
-  color: var(--gold);
-  width: 80px;
-  flex-shrink: 0;
-}
-.cert-text { font-size: 15px; color: var(--ink2); }
-
-/* ═══════════════════════════════════════
-   BACKUP
-═══════════════════════════════════════ */
-.backup-item {
-  padding: 15px 18px;
-  background: var(--parchment);
-  border: 1px solid rgba(92,26,37,0.1);
-  border-left: 3px solid var(--burgundy);
-  margin-bottom: 10px;
-}
-.b-num   { font-family:'Cinzel',serif; font-size:7px; letter-spacing:3px; color:var(--burgundy); opacity:.6; margin-bottom:3px; }
-.b-title { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:600; color:var(--burgundy2); margin-bottom:3px; }
-.b-body  { font-size:14.5px; color:var(--ink3); line-height:1.7; }
-
-.rule-note {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-style: italic;
-  color: var(--ink2);
-  padding: 10px 16px;
-  border-left: 2px solid var(--parchment3);
-  margin-top: 12px;
-  line-height: 1.7;
-}
-.rule-note strong { color: var(--navy); font-style: normal; font-weight:600; }
-
-/* ═══════════════════════════════════════
-   PROSE + SPACING
-═══════════════════════════════════════ */
-p.prose {
-  font-size: 15.5px;
-  color: var(--ink2);
-  line-height: 1.85;
-  margin-bottom: 16px;
-}
-
-/* ═══════════════════════════════════════
-   FINAL
-═══════════════════════════════════════ */
-.final {
-  text-align: center;
-  padding: 60px 32px 40px;
-  margin-top: 52px;
-  border-top: 1px solid var(--rule-gold);
-  position: relative;
-}
-.final::before {
-  content: '';
-  position: absolute;
-  top: 4px; left: 80px; right: 80px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(168,132,30,0.2), transparent);
-}
-
-.final-ornament {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 14px;
-  color: var(--gold2);
-  letter-spacing: 16px;
-  margin-bottom: 32px;
-  opacity: 0.6;
-}
-
-.final-lines { display:flex; flex-direction:column; gap:4px; margin-bottom:44px; }
-
-.f-line {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(12px, 2.2vw, 17px);
-  font-weight: 400;
-  letter-spacing: 3px;
-  color: var(--ink4);
-}
-
-.f-line strong         { font-weight:700; color:var(--navy); }
-.f-line.gold strong    { color: var(--gold); }
-.f-line.burg strong    { color: var(--burgundy); }
-.f-line.forest strong  { color: var(--forest); }
-
-.quote-block {
-  max-width: 620px;
-  margin: 0 auto 40px;
-  padding: 28px 36px;
-  background: var(--parchment);
-  border: 1px solid var(--rule-gold);
-  position: relative;
-  text-align: left;
-}
-.quote-block::before {
-  content: '\201C';
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 100px;
-  color: var(--gold2);
-  opacity: 0.18;
-  position: absolute;
-  top: -14px; left: 12px;
-  line-height: 1;
-  pointer-events: none;
-}
-.quote-block::after {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border: 1px solid rgba(168,132,30,0.1);
-  pointer-events: none;
-}
-.quote-block p {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 17.5px;
-  font-style: italic;
-  color: var(--ink2);
-  line-height: 1.85;
-  position: relative;
-  z-index: 1;
-}
-
-.timestamps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px 32px;
-  margin-top: 28px;
-}
-.ts {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 2.5px;
-  color: var(--ink4);
-}
-.ts span { color: var(--navy); }
-
-.final-coda {
-  font-family: 'Cinzel', serif;
-  font-size: 9px;
-  letter-spacing: 5px;
-  color: var(--gold);
-  margin-top: 32px;
-  text-transform: uppercase;
-  opacity: 0.8;
-}
+    radial-gradient(1px 1px at 15% 22%,rgba(255,255,255,.18) 0%,transparent 100%),
+    radial-gradient(1px 1px at 73% 11%,rgba(255,255,255,.12) 0%,transparent 100%),
+    radial-gradient(1px 1px at 88% 60%,rgba(255,255,255,.10) 0%,transparent 100%),
+    radial-gradient(1px 1px at 32% 80%,rgba(255,255,255,.08) 0%,transparent 100%),
+    radial-gradient(1px 1px at 56% 45%,rgba(255,255,255,.14) 0%,transparent 100%);
+  pointer-events:none;
+}
+
+.est{
+  font-family:var(--royal);font-size:10px;letter-spacing:.5em;
+  color:rgba(201,146,42,.6);text-transform:uppercase;margin-bottom:14px;
+}
+
+#hero-name{
+  font-family:var(--royal);font-size:clamp(52px,9.5vw,108px);font-weight:700;
+  letter-spacing:.07em;line-height:1;position:relative;z-index:1;
+}
+#hero-name .first{
+  background:linear-gradient(135deg,#f5e6c0 0%,#FFD166 38%,#C9922A 68%,#f5e6c0 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+#hero-name .last{color:var(--cream)}
+
+.hero-rule{
+  width:200px;height:1px;margin:20px auto;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.55;
+}
+
+#hero-title{
+  font-family:var(--serif);font-style:italic;font-size:clamp(15px,2.2vw,21px);
+  color:var(--gold-pale);letter-spacing:.1em;opacity:.8;margin-bottom:10px;
+}
+
+#hero-quote{
+  font-family:var(--serif);font-style:italic;font-size:clamp(13px,1.6vw,17px);
+  color:rgba(250,246,238,.45);letter-spacing:.06em;margin-top:6px;
+}
+
+#hero-loc{
+  font-family:var(--sans);font-size:10px;letter-spacing:.3em;
+  color:rgba(122,106,74,.7);text-transform:uppercase;margin-top:28px;
+}
+
+#scroll-hint{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.4;
+  animation:bob 2.2s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+#scroll-hint span{font-family:var(--royal);font-size:8px;letter-spacing:.4em;color:var(--gold)}
+.sarrow{width:1px;height:34px;background:linear-gradient(to bottom,var(--gold),transparent)}
+
+/* ══ SHARED SECTION STYLES ══ */
+.sec-wrap{padding:0;max-width:none}
+.sec-inner{max-width:1020px;margin:0 auto;padding:100px 40px}
+.sec-label{font-family:var(--royal);font-size:9px;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;display:block;opacity:.7}
+.sec-title{font-family:var(--royal);font-size:clamp(28px,4vw,46px);font-weight:600;color:var(--cream);line-height:1.1;margin-bottom:8px}
+.sec-title em{font-style:italic;font-weight:300;background:linear-gradient(135deg,#C9922A,#FFD166);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-body{font-family:var(--serif);font-size:clamp(15px,1.6vw,18px);line-height:1.9;color:rgba(250,246,238,.68);margin-top:24px;font-weight:300}
+
+/* cream bg overrides */
+.cream-sec .sec-title{color:var(--text)}
+.cream-sec .sec-label{color:var(--gold)}
+.cream-sec .sec-body{color:rgba(26,20,8,.68)}
+
+.divider-line{width:100%;max-width:1020px;margin:0 auto;height:1px;background:linear-gradient(to right,transparent,rgba(201,146,42,.25),transparent)}
+
+/* pull quote */
+.pq{border-left:2px solid var(--gold);padding:16px 28px;margin:36px 0;font-family:var(--serif);font-size:clamp(17px,2.4vw,25px);font-style:italic;line-height:1.65;opacity:.82}
+.cream-sec .pq{color:var(--text)}
+
+/* ══ EXPERIENCE ══ */
+.exp-grid{margin-top:48px;display:flex;flex-direction:column;gap:2px}
+.exp-card{background:rgba(255,255,255,.02);border:1px solid rgba(201,146,42,.1);padding:36px 40px;position:relative;overflow:hidden;transition:background .3s,border-color .3s}
+.exp-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s}
+.exp-card:hover{background:rgba(201,146,42,.04);border-color:rgba(201,146,42,.28)}
+.exp-card:hover::before{opacity:1}
+.exp-num{font-family:var(--royal);font-size:clamp(36px,5vw,60px);color:rgba(201,146,42,.08);font-weight:700;position:absolute;right:30px;top:18px;line-height:1;pointer-events:none}
+.exp-role{font-family:var(--royal);font-size:clamp(14px,1.9vw,19px);color:var(--cream);font-weight:600;letter-spacing:.04em;margin-bottom:3px}
+.exp-org{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--gold);margin-bottom:5px}
+.exp-meta{font-family:var(--sans);font-size:10px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.exp-desc{font-family:var(--serif);font-size:clamp(14px,1.5vw,16px);color:rgba(250,246,238,.58);line-height:1.9}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{font-family:var(--sans);font-size:9px;letter-spacing:.18em;text-transform:uppercase;border:1px solid rgba(201,146,42,.28);color:var(--gold);padding:4px 10px}
 
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
-@media (max-width:680px) {
-  .content { padding: 36px 24px 56px; }
-  .milestones { grid-template-columns: repeat(2,1fr); }
-  .accelerators { grid-template-columns: 1fr; }
-  .passports { grid-template-columns: 1fr; }
-  .frame-outer, .frame-inner { display:none; }
-  .corner { display:none; }
+/* ══ SKILLS ══ */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:24px;margin-top:48px}
+.sk-block{border-top:1px solid rgba(201,146,42,.3);padding-top:18px}
+.sk-title{font-family:var(--royal);font-size:10px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.sk-list{list-style:none;font-family:var(--serif);font-size:15px;color:rgba(26,20,8,.68);line-height:2.1}
+.sk-list li::before{content:'— ';color:var(--gold);opacity:.55}
+
+/* ══ EDUCATION ══ */
+.edu-row{display:flex;gap:48px;flex-wrap:wrap;margin-top:48px}
+.edu-col{flex:1;min-width:230px}
+.edu-col-title{font-family:var(--royal);font-size:10px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid rgba(201,146,42,.18)}
+.edu-item{margin-bottom:22px}
+.edu-name{font-family:var(--serif);font-size:16px;color:var(--cream);margin-bottom:2px}
+.cream-sec .edu-name{color:var(--text)}
+.edu-detail{font-family:var(--sans);font-size:10px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+.edu-badge{display:inline-block;font-family:var(--sans);font-size:8px;letter-spacing:.15em;text-transform:uppercase;background:rgba(201,146,42,.1);border:1px solid rgba(201,146,42,.22);color:var(--gold);padding:3px 8px;margin-top:4px}
+.lang-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.lang-pill{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--cream);border:1px solid rgba(201,146,42,.18);padding:7px 18px}
+.lang-level{font-family:var(--sans);font-size:8px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;display:block;margin-top:1px;opacity:.6}
+
+/* ══ MASTERPLAN ══ */
+#masterplan-sec{background:var(--black2);padding:0;max-width:none}
+#masterplan-inner{max-width:1020px;margin:0 auto;padding:100px 40px}
+
+.mp-intro{font-family:var(--serif);font-size:clamp(14px,1.5vw,17px);color:rgba(250,246,238,.55);line-height:1.9;margin-top:24px;font-style:italic}
+
+/* Phase cards */
+.phases{margin-top:56px;display:flex;flex-direction:column;gap:2px}
+
+.phase{
+  border:1px solid rgba(201,146,42,.1);
+  background:rgba(255,255,255,.015);
+  padding:0;overflow:hidden;
+  transition:border-color .3s;
+  cursor:pointer;
+}
+.phase:hover{border-color:rgba(201,146,42,.3)}
+
+.phase-header{
+  display:flex;align-items:center;gap:20px;
+  padding:26px 36px;
+  position:relative;
+}
+.phase-header::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.phase:hover .phase-header::after{opacity:1}
+
+.phase-num{
+  font-family:var(--royal);font-size:11px;letter-spacing:.3em;
+  color:rgba(201,146,42,.5);text-transform:uppercase;flex-shrink:0;min-width:70px;
+}
+.phase-age{
+  font-family:var(--royal);font-size:clamp(13px,1.8vw,16px);color:var(--gold);
+  font-weight:600;flex-shrink:0;min-width:90px;
+}
+.phase-name{
+  font-family:var(--royal);font-size:clamp(14px,2vw,19px);color:var(--cream);
+  font-weight:600;letter-spacing:.04em;flex:1;
+}
+.phase-loc{
+  font-family:var(--sans);font-size:10px;letter-spacing:.18em;
+  color:var(--muted);text-transform:uppercase;flex-shrink:0;
+}
+.phase-chevron{
+  font-size:12px;color:rgba(201,146,42,.4);margin-left:12px;
+  transition:transform .3s;flex-shrink:0;
+}
+.phase.open .phase-chevron{transform:rotate(180deg)}
+
+.phase-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .5s cubic-bezier(.4,0,.2,1);
+}
+.phase.open .phase-body{max-height:1800px}
+
+.phase-content{padding:0 36px 30px 36px}
+
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+.phase-stat{border-top:1px solid rgba(201,146,42,.18);padding-top:12px}
+.phase-stat-label{font-family:var(--sans);font-size:8px;letter-spacing:.22em;color:rgba(201,146,42,.6);text-transform:uppercase;margin-bottom:4px}
+.phase-stat-value{font-family:var(--serif);font-size:15px;color:rgba(250,246,238,.7)}
+
+.phase-bullets{list-style:none;margin-top:4px}
+.phase-bullets li{
+  font-family:var(--serif);font-size:clamp(13px,1.4vw,15px);
+  color:rgba(250,246,238,.55);line-height:1.85;padding-left:20px;position:relative;
+}
+.phase-bullets li::before{content:'—';position:absolute;left:0;color:rgba(201,146,42,.5);font-size:12px;top:3px}
+
+.milestone-tag{
+  display:inline-block;font-family:var(--sans);font-size:8px;letter-spacing:.18em;
+  text-transform:uppercase;background:rgba(201,146,42,.1);border:1px solid rgba(201,146,42,.25);
+  color:var(--gold);padding:3px 10px;margin-top:16px;
+}
+
+/* ══ WEALTH TIMELINE ══ */
+.wealth-table{margin-top:40px;border-collapse:collapse;width:100%;font-family:var(--serif)}
+.wealth-table th{font-family:var(--royal);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,146,42,.6);padding:10px 16px;text-align:left;border-bottom:1px solid rgba(201,146,42,.15)}
+.wealth-table td{padding:11px 16px;font-size:14px;color:rgba(250,246,238,.6);border-bottom:1px solid rgba(255,255,255,.04)}
+.wealth-table td:first-child{color:var(--gold);font-family:var(--royal);font-size:13px}
+.wealth-table td:last-child{color:rgba(250,246,238,.9)}
+.wealth-table tr:hover td{background:rgba(201,146,42,.04)}
+
+/* ══ NON-NEGOTIABLES ══ */
+.nn-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px}
+@media(max-width:600px){.nn-grid{grid-template-columns:1fr}}
+.nn-col{padding:28px 30px;border:1px solid rgba(201,146,42,.1)}
+.nn-col:first-child{border-right:none}
+.nn-col-title{font-family:var(--royal);font-size:10px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:18px}
+.nn-col:first-child .nn-col-title{color:#E24B4A}
+.nn-col:last-child .nn-col-title{color:var(--gold)}
+.nn-list{list-style:none}
+.nn-list li{font-family:var(--serif);font-size:14px;color:rgba(250,246,238,.6);line-height:1.9;padding-left:18px;position:relative}
+.nn-list li::before{position:absolute;left:0;font-size:11px;top:3px}
+.nn-col:first-child .nn-list li::before{content:'✕';color:rgba(226,75,74,.6)}
+.nn-col:last-child .nn-list li::before{content:'✓';color:rgba(201,146,42,.7)}
+
+/* ══ FOOTER ══ */
+#footer{background:var(--black);border-top:1px solid rgba(201,146,42,.1);padding:60px 40px;text-align:center}
+.f-name{font-family:var(--royal);font-size:22px;letter-spacing:.15em;color:var(--gold);margin-bottom:4px}
+.f-sub{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--muted);letter-spacing:.1em;margin-bottom:8px}
+.f-quote{font-family:var(--serif);font-style:italic;font-size:16px;color:rgba(250,246,238,.35);margin-bottom:24px}
+.f-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.f-links a{font-family:var(--sans);font-size:9px;letter-spacing:.22em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.f-links a:hover{color:var(--gold)}
+.f-copy{font-family:var(--sans);font-size:9px;letter-spacing:.12em;color:rgba(122,106,74,.3);margin-top:28px;text-transform:uppercase}
+
+.grule{width:200px;height:1px;margin:20px auto;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.4}
+
+/* ══ SCROLL REVEAL ══ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .85s ease,transform .85s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}.d4{transition-delay:.46s}
+
+@media(max-width:640px){
+  .sec-inner,#masterplan-inner{padding:70px 18px}
+  .exp-card,.phase-header,.phase-content{padding-left:20px;padding-right:20px}
+  .edu-row{flex-direction:column;gap:28px}
+  .nn-grid{grid-template-columns:1fr}
+  .nn-col:first-child{border-right:1px solid rgba(201,146,42,.1);border-bottom:none}
+  .wealth-table{font-size:12px}
+  .wealth-table th,.wealth-table td{padding:8px 10px}
 }
 </style>
 </head>
 <body>
-<div class="page">
 
-  <!-- Border frames -->
-  <div class="frame-outer"></div>
-  <div class="frame-inner"></div>
+<!-- ══ INTRO ══ -->
+<div id="intro">
+  <div id="intro-name">Dhairya Desai</div>
+  <div id="intro-line"></div>
+</div>
 
-  <!-- Corner SVG flourishes -->
-  <div class="corner tl"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 26 L2 2 L26 2" stroke="rgba(168,132,30,0.5)" stroke-width="1"/><path d="M2 14 L8 14 M14 2 L14 8" stroke="rgba(168,132,30,0.35)" stroke-width="0.8"/><circle cx="2" cy="2" r="1.5" fill="rgba(168,132,30,0.5)"/></svg></div>
-  <div class="corner tr"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 26 L2 2 L26 2" stroke="rgba(168,132,30,0.5)" stroke-width="1"/><path d="M2 14 L8 14 M14 2 L14 8" stroke="rgba(168,132,30,0.35)" stroke-width="0.8"/><circle cx="2" cy="2" r="1.5" fill="rgba(168,132,30,0.5)"/></svg></div>
-  <div class="corner bl"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 26 L2 2 L26 2" stroke="rgba(168,132,30,0.5)" stroke-width="1"/><path d="M2 14 L8 14 M14 2 L14 8" stroke="rgba(168,132,30,0.35)" stroke-width="0.8"/><circle cx="2" cy="2" r="1.5" fill="rgba(168,132,30,0.5)"/></svg></div>
-  <div class="corner br"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 26 L2 2 L26 2" stroke="rgba(168,132,30,0.5)" stroke-width="1"/><path d="M2 14 L8 14 M14 2 L14 8" stroke="rgba(168,132,30,0.35)" stroke-width="0.8"/><circle cx="2" cy="2" r="1.5" fill="rgba(168,132,30,0.5)"/></svg></div>
+<!-- ══ SITE ══ -->
+<div id="site">
 
-  <div class="content">
-
-  <!-- ── HERO ── -->
-  <div class="hero">
-    <div class="hero-top-ornament">✦ &nbsp;&nbsp; ✦ &nbsp;&nbsp; ✦</div>
-    <div class="hero-eyebrow">Classified &nbsp;·&nbsp; Final Version &nbsp;·&nbsp; Age 17 → Legacy</div>
-    <div class="hero-title">Dhairya's<br><span class="accent">Plan</span></div>
-    <div class="hero-rule"><div class="hero-rule-center">◆ &nbsp; ◆ &nbsp; ◆</div></div>
-    <div class="hero-subtitle">The Australia – UAE Pipeline &nbsp;·&nbsp; AI‑First Executive Track</div>
-    <div class="hero-tag">Dhairya Desai &nbsp;·&nbsp; Operative Dossier &nbsp;·&nbsp; Phase 0 of 6</div>
-  </div>
-
-  <!-- ── WHO YOU ARE ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge">ID File</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">Who You Are Right Now</div>
-      </div>
-    </div>
-    <ul class="list">
-      <li>17 years old, turning 18 in July 2026</li>
-      <li>Founder of DezaiAI — live service through UOW Year 1 only</li>
-      <li>Year 13, GEMS Education Dubai</li>
-      <li>Australian university pathway planned and confirmed</li>
-      <li>Triple ACS‑accredited degree pathway locked</li>
-      <li>Gujarati heritage, UAE raised, globally minded</li>
-      <li>Thinking at 40 while living at 17</li>
-    </ul>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── PHASE 0 ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge">Phase 00</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">Before The Journey Begins</div>
-        <div class="sec-meta">Age 17–18 &nbsp;·&nbsp; Dubai &nbsp;·&nbsp; July 2025 – July 2026</div>
-      </div>
-    </div>
-    <div class="mission"><p>Mission: Arrive at UOWD as a founder, not just a student.</p></div>
-
-    <div class="sub">
-      <div class="sub-head">DezaiAI — Service wraps after Year 1</div>
-      <ul class="list">
-        <li>Scale to more schools — get measurable user numbers</li>
-        <li>Collect teacher and school testimonials formally</li>
-        <li>Document every decision, iteration, and lesson</li>
-        <li>Track usage statistics obsessively</li>
-        <li>Treat this as your first real business case study</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Cisco NetAcad — Complete Before BSc</div>
-      <ul class="list check">
-        <li>CCNA: Introduction to Networks</li>
-        <li>Cybersecurity Essentials</li>
-        <li>Python Essentials 1 &amp; 2</li>
-        <li>Introduction to AI</li>
-        <li>Introduction to Data Science</li>
-      </ul>
-      <ul class="list cross" style="margin-top:8px">
-        <li>Skip Networking Essentials — overlaps with CCNA</li>
-        <li>Skip Packet Tracer — tool tutorial, not a credential</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Personal Brand</div>
-      <ul class="list">
-        <li>Rewrite LinkedIn profile — sharp headline, technical skills first</li>
-        <li>Begin posting about DezaiAI classroom deployments</li>
-        <li>Target 500+ connections before leaving Dubai</li>
-        <li>Become known before you arrive at university</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head navy">Mindset</div>
-      <ul class="list navy">
-        <li>The roadmap is a compass, not a cage</li>
-        <li>Stay open to opportunities that don't fit perfectly</li>
-        <li>The why matters more than the what</li>
-        <li>Protect the philosophy you already carry</li>
-      </ul>
+  <!-- HERO -->
+  <div id="hero">
+    <p class="est">Est. 2008 &nbsp;·&nbsp; Dubai, UAE</p>
+    <h1 id="hero-name">
+      <span class="first">Dhairya</span> <span class="last">Desai</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p id="hero-title">Founder · Innovator · Leader</p>
+    <p id="hero-quote">"Worry is overpriced. Life is priceless."</p>
+    <p id="hero-loc">GEMS New Millennium School &nbsp;·&nbsp; Founder, Dezai AI</p>
+    <div id="scroll-hint">
+      <span>Scroll</span>
+      <div class="sarrow"></div>
     </div>
   </div>
 
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── PHASE 1 ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge">Phase 01</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">The Foundation</div>
-        <div class="sec-meta">Age 18–23 &nbsp;·&nbsp; Dubai → Wollongong → Melbourne</div>
+  <!-- ABOUT -->
+  <div class="sec-wrap" style="background:var(--cream)">
+    <div class="sec-inner cream-sec">
+      <span class="sec-label reveal">Introduction</span>
+      <h2 class="sec-title reveal d1">A mind that <em>builds</em>,<br>a spirit that <em>leads</em></h2>
+      <div class="pq reveal d2">
+        "Since a very young age, I have consistently pushed myself to learn and create — from growing a YouTube channel to 420,000+ views, to composing music, to building Dezai AI."
       </div>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 18–19 · UOWD Year 1 — Dubai</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary</div><div class="stat-value">None — investing in the foundation</div></div>
-      </div>
-      <div class="sub-head navy" style="margin-top:0">Academic</div>
-      <ul class="list">
-        <li>BSc Computer Science — ACS Accredited</li>
-        <li>Target GPA: <strong>3.5+</strong> from day one (Deloitte soft filter)</li>
-        <li>Build relationships with every professor — future references</li>
-      </ul>
-      <div class="sub-head navy">Network</div>
-      <ul class="list">
-        <li>Build UAE connections aggressively — internships, events, meetups</li>
-        <li>Target Big 4 Dubai office events — get your face known early</li>
-        <li>Post weekly on LinkedIn — DezaiAI, AI insights, learning journey</li>
-      </ul>
-      <div class="sub-head navy">DezaiAI</div>
-      <ul class="list">
-        <li>Pitch to more Dubai schools</li>
-        <li>Explore monetisation quietly — even AED 1 of revenue changes the story</li>
-        <li>Enter UAE startup competitions for visibility and credibility</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 19–21 · UOW Years 2–3 — Wollongong, Australia</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary</div><div class="stat-value">None — but regional study bonus points accumulating</div></div>
-      </div>
-      <ul class="list">
-        <li>Transfer to UOW main campus — ACS Accredited</li>
-        <li>Regional classification = <strong>5 automatic PR migration points</strong></li>
-        <li>Maintain GPA 3.5+ — non‑negotiable for Deloitte</li>
-        <li>Begin ACS skills assessment in final semester — don't wait</li>
-        <li>Apply for Deloitte vacation programme between Years 2–3</li>
-        <li>Treat it as a 3‑week live audition for the grad programme</li>
-        <li>Also apply to Accenture and PwC — competition = options</li>
-        <li>AWS Certified Solutions Architect – Associate</li>
-        <li>CompTIA Security+ only if required for internship / vacation programme</li>
-        <li>Build local network — cohort, professors, Sydney/Wollongong events</li>
-        <li>Open Australian bank account, start local credit history</li>
-        <li>Monitor DOHA skilled occupation list and PR landscape</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">PR Foundation — By Graduation</div>
-      <ul class="list check">
-        <li>2 years regional study = 5 bonus points</li>
-        <li>Under 25 = maximum age points</li>
-        <li>Native English = full language points</li>
-        <li>CS degree from Australian institution = clean ACS assessment</li>
-        <li>Already above PR threshold before graduation</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 21–23 · MSc Information Systems — University of Melbourne</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary</div><div class="stat-value">None — but Deloitte offer incoming</div></div>
-        <div class="stat-cell"><div class="stat-label">Target WAM</div><div class="stat-value gold">75+</div></div>
-      </div>
-      <div class="mission"><p>Deloitte Campaign — Primary Mission</p></div>
-      <ul class="list">
-        <li>Week 1, Semester 1: Attend every Deloitte campus event</li>
-        <li>Connect with Deloitte talent team on LinkedIn immediately</li>
-        <li>Secure at least one strong internal referral</li>
-        <li>Apply for Deloitte vacation programme in Year 1</li>
-        <li>Treat vacation programme as 3‑week audition for grad offer</li>
-        <li>Do not wait until graduation to start</li>
-        <li>Lodge ACS skills assessment in final Masters semester</li>
-        <li>Triple ACS‑accredited pathway = mostly administrative</li>
-        <li>Lodge 189/190 skilled migration PR before or right after graduation</li>
-      </ul>
+      <p class="sec-body reveal d3">
+        Dhairya Desai is a senior student at GEMS New Millennium School, Dubai — studying Physics, Biology and Chemistry — while simultaneously founding and running an AI-powered education platform. His journey spans content creation, music production, web development, an aviation internship at Sarsan Aviation Academy, and youth leadership across 10+ Model United Nations conferences.
+      </p>
+      <p class="sec-body reveal d4" style="margin-top:14px">
+        He founded <strong>Dezai AI</strong> to democratise access to intelligent study tools — removing paywalls, sign-in barriers, and complexity so that any student, anywhere, can benefit. The platform integrates multiple AI models for refined accuracy and has attracted active users across India and the UAE.
+      </p>
     </div>
   </div>
+  <div class="divider-line"></div>
 
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── PHASE 2 ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge">Phase 02</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">The Deloitte Years</div>
-        <div class="sec-meta">Age 23–28 &nbsp;·&nbsp; Australia</div>
-      </div>
-    </div>
-    <div class="mission"><p>You are not here for money. You are here to collect weapons.</p></div>
-
-    <div class="sub">
-      <div class="sub-head">Age 23–24 · Graduate Analyst</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary</div><div class="stat-value gold">AUD 78k – 85k</div></div>
-        <div class="stat-cell"><div class="stat-label">After Tax</div><div class="stat-value gold">AUD 58k – 63k</div></div>
-        <div class="stat-cell"><div class="stat-label">Monthly</div><div class="stat-value gold">AUD 4,800–5,200</div></div>
-      </div>
-      <div class="mission"><p>Mission: Learn how the world actually works</p></div>
-      <ul class="list">
-        <li>Every deck = training in billion‑dollar decision framing</li>
-        <li>Every client meeting = lesson in power dynamics</li>
-        <li>Volunteer for the hardest projects, never the comfortable ones</li>
-        <li>Build internal Deloitte network — your cohort are future CFOs and CEOs</li>
-        <li>PR processing continues, citizenship clock starts</li>
-        <li>Begin CISM study in the background</li>
-      </ul>
-      <div class="sub-head" style="margin-top:16px">Wealth Engine Starts</div>
-      <ul class="list">
-        <li>Gold: 5g quarterly — Emirates Gold or Perth Mint bars</li>
-        <li>VOO: AUD 1,500/month — automate, never touch</li>
-        <li>Emergency fund: 3 months of expenses in high‑interest savings</li>
-        <li>Do not inflate lifestyle — live like a student, invest like an executive</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 24–25 · Consultant</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary</div><div class="stat-value gold">AUD 95k – 115k</div></div>
-        <div class="stat-cell"><div class="stat-label">After Tax</div><div class="stat-value gold">AUD 68k – 80k</div></div>
-        <div class="stat-cell"><div class="stat-label">Net Worth</div><div class="stat-value">≈ AUD 80k–100k</div></div>
-      </div>
-      <div class="mission"><p>Mission: Run workstreams independently</p></div>
-      <ul class="list">
-        <li>Earn first promotion by taking the hardest projects</li>
-        <li>Target cyber and digital transformation projects</li>
-        <li>Use every project as evidence for future CIO narrative</li>
-        <li>Present to client stakeholders — accelerate visibility</li>
-        <li>Complete CISM</li>
-        <li>VOO: AUD 2,000–2,500/month &nbsp;·&nbsp; Gold: 5g quarterly continues</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 25–26 · Senior Consultant</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary</div><div class="stat-value gold">AUD 118k – 138k</div></div>
-        <div class="stat-cell"><div class="stat-label">Monthly</div><div class="stat-value gold">AUD 6,800–7,800</div></div>
-        <div class="stat-cell"><div class="stat-label">Net Worth</div><div class="stat-value">≈ AUD 180k–220k</div></div>
-      </div>
-      <div class="mission"><p>Mission: Find the transformation nobody wants. Deliver it.</p></div>
-      <ul class="list">
-        <li>Lead small teams — responsible for other people's careers</li>
-        <li>Present directly to client C‑suite</li>
-        <li>Complete IAPP AIGP (AI Governance Professional)</li>
-        <li>Australian citizenship process begins</li>
-        <li>Start MBA research — INSEAD Abu Dhabi vs LBS Dubai</li>
-        <li>Quietly talk to Deloitte partners about Middle East opportunities</li>
-        <li>VOO: AUD 3,000/month</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 26–28 · Manager</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary</div><div class="stat-value gold">AUD 142k – 168k</div></div>
-        <div class="stat-cell"><div class="stat-label">Monthly</div><div class="stat-value gold">AUD 8,000–9,300</div></div>
-        <div class="stat-cell"><div class="stat-label">Net Worth</div><div class="stat-value">≈ AUD 350k–450k</div></div>
-      </div>
-      <div class="mission"><p>Mission: Become the person INSEAD wants to admit</p></div>
-      <ul class="list">
-        <li>Lead at least one project with budget &gt; AUD 2M — core MBA story</li>
-        <li>Secure Australian citizenship — do not leave before this</li>
-        <li>Complete SAFe Agilist</li>
-        <li>Begin TOGAF</li>
-        <li>Have quiet internal conversations about UAE transfer option</li>
-      </ul>
-      <div class="sub-head" style="margin-top:16px">MBA Application Profile — Age 28</div>
-      <ul class="list check">
-        <li>Deloitte Manager with 5 years Big 4 experience</li>
-        <li>Australian citizen</li>
-        <li>CISM + AIGP + SAFe certified</li>
-        <li>Led AUD 2M+ digital transformation</li>
-        <li>DezaiAI founder with classroom deployment</li>
-      </ul>
-      <div class="sub-head navy" style="margin-top:16px">Plant the UAE Seed</div>
-      <ul class="list navy">
-        <li>Connect with Deloitte UAE / Middle East partners</li>
-        <li>Attend Middle East practice events if possible</li>
-        <li>Be known before you need to be known</li>
-        <li>VOO: AUD 4,000–5,000/month &nbsp;·&nbsp; Begin property research — Sydney or Melbourne</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── PHASE 3 ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge">Phase 03</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">The MBA Bridge</div>
-        <div class="sec-meta">Age 28–30 &nbsp;·&nbsp; UAE</div>
-      </div>
-    </div>
-    <div class="mission"><p>The pivot from Western credibility to GCC power.</p></div>
-
-    <div class="sub">
-      <div class="sub-head">Targets</div>
-      <ul class="list">
-        <li><strong>INSEAD Abu Dhabi</strong> — Primary</li>
-        <li>LBS Dubai — Backup</li>
-        <li>Cost: AUD 120k–140k — funded from Deloitte Manager savings</li>
-      </ul>
-    </div>
-
-    <div class="mission burg"><p>The MBA is not the degree. The MBA is the network.</p></div>
-    <ul class="list" style="margin-bottom:20px">
-      <li>Your cohort = future CEOs, ministers, MDs of sovereign wealth funds, founders</li>
-    </ul>
-
-    <div class="sub">
-      <div class="sub-head">During MBA</div>
-      <ul class="list">
-        <li>Corporate Finance Certificate — CFA Institute or HBS Online</li>
-        <li>TOGAF completed</li>
-        <li>LinkedIn thought leadership becomes serious and consistent</li>
-        <li>Write about AI transformation, cyber governance, digital strategy</li>
-        <li>Speak at any available platform — get comfortable on stage</li>
-        <li>Quietly reconnect with UAE market</li>
-        <li>Target: Majid Al Futtaim, e&amp;, ADNOC Digital, Emirates Group, PwC Middle East</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head navy">Deloitte Transfer Option</div>
-      <ul class="list navy">
-        <li>If internal UAE transfer is available — take it</li>
-        <li>Enter UAE at AED 65k–85k/month immediately</li>
-        <li>Avoid re‑entry penalty by arriving with brand &amp; track record baked in</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── PHASE 4 ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge gold">Phase 04</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title gold">The UAE Acceleration</div>
-        <div class="sec-meta">Age 29–38 &nbsp;·&nbsp; UAE &nbsp;·&nbsp; Zero Tax</div>
-      </div>
-    </div>
-    <div class="mission"><p>Every dirham is yours. Zero tax. Maximum velocity.</p></div>
-
-    <div class="sub">
-      <div class="sub-head">Age 29–30 · Post‑MBA Strategic Lead</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Targets</div><div class="stat-value" style="font-size:13.5px">MAF · e& · ADNOC Digital · Emirates Group</div></div>
-        <div class="stat-cell"><div class="stat-label">Salary (Tax Free)</div><div class="stat-value gold">AED 50k–65k/mo</div></div>
-        <div class="stat-cell"><div class="stat-label">Annual</div><div class="stat-value gold">AED 600k–780k</div></div>
-        <div class="stat-cell"><div class="stat-label">Net Worth</div><div class="stat-value">AED 600k–800k</div></div>
-      </div>
-      <ul class="list">
-        <li>Apply for UAE Golden Visa the moment salary ≥ AED 30k</li>
-        <li>Australian Passport + UAE Golden Visa = total untouchability</li>
-        <li>No employer controls your residency again</li>
-        <li>Every conversation framed around revenue, cost, risk — not servers</li>
-        <li>Pivot from Technical Lead → Business Partner happens here or never</li>
-        <li>Start speaking at GITEX — even on small panels</li>
-        <li>VOO: AED 5,000/month &nbsp;·&nbsp; Gold: 5g quarterly</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 30–32 · Senior Strategic Lead</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary (Tax Free)</div><div class="stat-value gold">AED 58k–72k/mo &nbsp;·&nbsp; AED 696k–864k/yr</div></div>
-        <div class="stat-cell"><div class="stat-label">Net Worth</div><div class="stat-value">AED 1.5M — first million ✦</div></div>
-      </div>
-      <ul class="list">
-        <li>UAE track record established</li>
-        <li>INSEAD network fully active</li>
-        <li>Strong first UAE performance review</li>
-        <li>Counter‑offers arriving — used as leverage, not ego</li>
-        <li>Advisory relationships with government entities starting</li>
-        <li>VOO: AED 8,000/month</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 32–34 · Director of Technology</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary (Tax Free)</div><div class="stat-value gold">AED 65k–85k/mo &nbsp;·&nbsp; AED 780k–1.02M/yr</div></div>
-        <div class="stat-cell"><div class="stat-label">Net Worth</div><div class="stat-value">AED 3M–4M</div></div>
-      </div>
-      <div class="mission"><p>Mission: Own a crisis</p></div>
-      <ul class="list">
-        <li>Full P&amp;L ownership — use tech for cost reduction and revenue growth</li>
-        <li>Find the transformation nobody wants — deliver it under pressure</li>
-        <li>That crisis becomes your core CIO credential</li>
-        <li>If crisis doesn't exist, create an opportunity to solve one</li>
-        <li>Regular GITEX speaking slots</li>
-        <li>Government digital‑transformation advisory roles begin</li>
-        <li>LinkedIn thought leadership consistent and visible</li>
-        <li>VOO: AED 12,000/month &nbsp;·&nbsp; Property investment: Dubai or Australia</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 34–36 · Senior Director of Technology</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary (Tax Free)</div><div class="stat-value gold">AED 85k–100k/mo &nbsp;·&nbsp; AED 1.02M–1.2M/yr</div></div>
-      </div>
-      <ul class="list">
-        <li>Earning &gt; AED 1M/year</li>
-        <li>Crisis delivered — reputation hardened</li>
-        <li>Board‑level exposure begins</li>
-        <li>Sponsor identified and cultivated</li>
-        <li>Desai Automotive research begins — industry mapping, talent ID, tech landscape</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 36–38 · VP Technology / Deputy CIO</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Salary (Tax Free)</div><div class="stat-value gold">AED 100k–130k/mo &nbsp;·&nbsp; AED 1.2M–1.56M/yr</div></div>
-        <div class="stat-cell"><div class="stat-label">Net Worth</div><div class="stat-value">AED 12M–15M</div></div>
-      </div>
-      <div class="mission"><p>Mission: Do the CIO job with a different title</p></div>
-      <ul class="list">
-        <li>Board reporting — presenting to the most powerful people in the org</li>
-        <li>Enterprise architecture ownership</li>
-        <li>Vendor relationships at C‑suite level</li>
-        <li>Leading a team of 50+ — leading leaders</li>
-        <li>Budget ownership in hundreds of millions of AED</li>
-        <li>You are no longer learning — you are performing</li>
-        <li>Personal brand at peak — known voice in GCC tech leadership</li>
-        <li>VOO: AED 20,000/month &nbsp;·&nbsp; Desai planning accelerates — private feasibility study commissioned</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── PHASE 5 ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge burg">Phase 05</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title burg">Desai Launch + CIO Summit</div>
-        <div class="sec-meta">Age 38–42 &nbsp;·&nbsp; UAE</div>
-      </div>
-    </div>
-    <div class="mission burg"><p>Desai launches Age 38. CIO summit runs parallel.</p></div>
-
-    <div class="sub">
-      <div class="sub-head burg">Group CIO / CTO</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">Targets</div><div class="stat-value" style="font-size:13px">ADNOC · Emirates Group · MAF · DEWA · Smart Dubai · ADQ</div></div>
-        <div class="stat-cell"><div class="stat-label">Base Salary</div><div class="stat-value gold">AED 138k–175k/month</div></div>
-        <div class="stat-cell"><div class="stat-label">Total Package</div><div class="stat-value gold">AED 2.55M–3.75M</div></div>
-      </div>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head burg">Desai Automotive — World's First AI‑Native Luxury Atelier</div>
-      <div class="sub-head navy">Phase 1: Bikes First — UAE/GCC Launch Age 38</div>
-      <ul class="list">
-        <li>Dubai‑based modification house: AI + precision craftsmanship + ultra‑luxury</li>
-        <li>Start with motorcycles — Ducati, MV Agusta, custom Harley builds</li>
-        <li>AI generative design, predictive performance, digital twins</li>
-        <li>10–15 bike commissions annually — prove model, build reputation</li>
-        <li>Royal family commissions, concours wins establish credibility</li>
-      </ul>
-      <div class="sub-head navy" style="margin-top:16px">Phase 2: Cars Immediately Follow</div>
-      <ul class="list">
-        <li>Rolls Royce, Bentley, Mercedes‑AMG, Lamborghini, Bugatti platforms</li>
-        <li>Same AI‑first philosophy scaled to automotive</li>
-        <li>5–8 car commissions annually at full scale</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Desai Philosophy</div>
-      <ul class="list">
-        <li>AI and craftsmanship are partners, not opposites</li>
-        <li>True luxury = mathematical singularity — no two builds identical</li>
-        <li>Client conversation drives AI design → master craftsmen execute</li>
-        <li>"Made in UAE. Engineered by AI. Finished by hand."</li>
-        <li>High‑skill jobs: AI engineers, aerospace fabricators, luxury client managers</li>
-        <li>Royal garage programmes, sovereign fleet modifications</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Requirements Checklist</div>
-      <ul class="list check">
-        <li>Australian Passport</li>
-        <li>INSEAD/LBS MBA</li>
-        <li>UAE Golden Visa</li>
-        <li>15 years crisis‑tested leadership</li>
-        <li>P&amp;L ownership track record</li>
-        <li>CISM + AIGP + SAFe + TOGAF + Corporate Finance</li>
-        <li>Government relationships</li>
-        <li>Personal brand in GCC tech leadership</li>
-        <li>Deloitte + INSEAD networks</li>
-        <li>Group CIO launching AI luxury atelier</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── PHASE 6 ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge forest">Phase 06</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title forest">The Empire</div>
-        <div class="sec-meta">Age 42–55 &nbsp;·&nbsp; UAE & Beyond</div>
-      </div>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 42–50 · CIO Peak + Desai Scale</div>
-      <div class="stat-bar">
-        <div class="stat-cell"><div class="stat-label">CIO Salary</div><div class="stat-value gold">AED 150k–195k/month + bonuses</div></div>
-        <div class="stat-cell"><div class="stat-label">Net Worth at 42</div><div class="stat-value">AED 25M–35M</div></div>
-      </div>
-      <ul class="list">
-        <li>Desai Automotive: Bikes profitable, cars launching, GCC reputation established</li>
-        <li>Bike commissions: 10–15 → 50–80 annually</li>
-        <li>Car commissions: 5–8 → 20+ annually</li>
-        <li>Facility expansion, global supply chain</li>
-        <li>Government contracts secured</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Desai Foundation Launch</div>
-      <ul class="list">
-        <li>Education scholarships — AI, technology, STEM for underprivileged</li>
-        <li>Pediatric hospital planning begins — Gujarat</li>
-        <li>Grade 1 dream takes physical form</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">Age 50–55 · Desai Dominance</div>
-      <ul class="list">
-        <li>CIO transitions to advisory/board positions</li>
-        <li>Desai = primary focus, ultra‑exclusive global leader</li>
-        <li>Revenue Year 1–2: AED 12M–18M &nbsp;|&nbsp; Your take (60%): AED 7M–11M</li>
-        <li>Revenue Year 3–5: AED 45M–75M &nbsp;|&nbsp; Your take: AED 27M–45M</li>
-        <li>Revenue Year 6–10: AED 130M–200M &nbsp;|&nbsp; Your take: AED 78M–120M</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── BACKUP PROTOCOLS ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge burg">Backup</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title burg">Backup Protocols</div>
-        <div class="sec-meta">When the preferred door is locked</div>
-      </div>
-    </div>
-    <p class="prose">The plan has one preferred path. This section defines the acceptable re‑routes. None of them change the destination. They change the road.</p>
-
-    <div class="sub">
-      <div class="sub-head burg">Career Backup — If Deloitte Says No</div>
-      <p class="prose">The grad offer is not guaranteed. Here is the priority order if it doesn't come:</p>
-      <div class="backup-item"><div class="b-num">Option I</div><div class="b-title">Accenture or PwC grad programme</div><div class="b-body">Same Big 4 tier, same client exposure, same MBA story. Apply in parallel — always.</div></div>
-      <div class="backup-item"><div class="b-num">Option II</div><div class="b-title">KPMG or EY</div><div class="b-body">Slightly smaller brand in the GCC but still clears the MBA threshold. Two strong years here still builds the CIO narrative.</div></div>
-      <div class="backup-item"><div class="b-num">Option III</div><div class="b-title">Tech firm graduate programme</div><div class="b-body">AWS, Microsoft, or IBM in Australia. Less prestige than Big 4 but cloud certifications accelerate fast. Harder MBA story but not impossible.</div></div>
-      <div class="backup-item"><div class="b-num">Option IV</div><div class="b-title">Boutique consulting or specialist cyber firm</div><div class="b-body">Last resort, not a failure. Two years of genuine delivery in a smaller shop can outperform two years of bench time at a big firm. The projects matter more than the logo at this stage.</div></div>
-      <div class="rule-note"><strong>Rule:</strong> Never accept a role that does not involve client delivery or technology decision‑making. Title and brand are secondary. Proximity to real decisions is the filter.</div>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head burg">MBA Backup — If INSEAD and LBS Both Say No</div>
-      <div class="backup-item"><div class="b-num">Option I</div><div class="b-title">Reapply in 12 months</div><div class="b-body">Spend the gap year taking on a visible crisis project at Deloitte, building a GITEX speaking slot, and strengthening the application essay. A deferred INSEAD admit is better than a rushed third‑choice accept.</div></div>
-      <div class="backup-item"><div class="b-num">Option II</div><div class="b-title">Melbourne Business School or AGSM</div><div class="b-body">Australian MBA with strong APAC network. The GCC premium is lower but the pathway to UAE re‑entry via Deloitte transfer still works. Adds 12–18 months to the timeline, not 5 years.</div></div>
-      <div class="backup-item"><div class="b-num">Option III</div><div class="b-title">Skip the MBA — take the Deloitte UAE internal transfer</div><div class="b-body">If the transfer is available at Manager level with a strong profile, the MBA can follow later part‑time or be replaced entirely by an executive programme at 35. The MBA is a vehicle, not a destination.</div></div>
-      <div class="rule-note"><strong>Rule:</strong> Never choose a lesser full‑time MBA to save time. Either get the right one, defer and reapply, or skip it entirely for a direct transfer.</div>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head burg">Timeline Backup — If Things Run 2–3 Years Slow</div>
-      <p class="prose">The plan is written in exact ages. Real life doesn't run on schedule. Here is how each phase absorbs a delay:</p>
-      <ul class="list">
-        <li><strong>Phase 1 runs long:</strong> An extra year at UOW or Melbourne adds PR points and deepens the academic network. Do not rush graduation to hit an arbitrary age.</li>
-        <li><strong>Phase 2 runs long:</strong> An extra year at Deloitte before the MBA is an asset, not a loss. More projects, larger budget ownership, stronger application essay.</li>
-        <li><strong>Phase 3 runs long:</strong> MBA at 30–31 instead of 28–29 is common. The GCC cohort is older and more senior — you fit better.</li>
-        <li><strong>Phase 4 runs long:</strong> UAE Director at 35 instead of 32 is still decades ahead of most people on the same track.</li>
-        <li><strong>Desai launches at 40 instead of 38:</strong> Two more years of capital accumulation and government relationships. The launch is stronger, not weaker.</li>
-      </ul>
-      <div class="rule-note"><strong>Rule:</strong> The destination does not move. Only the arrival date is variable. Never compress a phase by skipping the milestone that defines it.</div>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head burg">DezaiAI Backup — If It Gets No Traction</div>
-      <ul class="list">
-        <li>Document it honestly. One school, real teachers, real feedback is still a founder story.</li>
-        <li>Wrap it cleanly at the end of Year 1 as planned. Do not extend it out of ego.</li>
-        <li>The credential is "I built and deployed an AI product at 17." The scale matters less than the fact.</li>
-        <li>Desai Automotive does not depend on DezaiAI succeeding. They share a philosophy, not a dependency.</li>
-      </ul>
-    </div>
-
-    <div class="sub">
-      <div class="sub-head">The Re‑routing Logic</div>
-      <p class="prose">For every major milestone, the question is the same: if this specific door is locked, which one do I knock on next? The answer is always: the next closest door that still leads to the same room.</p>
-      <p class="prose">The career makes you successful. The backups keep you on track when the preferred path is temporarily closed.</p>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── CERTIFICATIONS ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge">Certs</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">Certification Timeline</div>
-      </div>
-    </div>
-    <div class="cert-row"><div class="cert-age">Age 17–18</div><div class="cert-text">Cisco NetAcad bundle — Foundation literacy before BSc</div></div>
-    <div class="cert-row"><div class="cert-age">Age 20–21</div><div class="cert-text">AWS Solutions Architect Associate — Cloud credibility for Deloitte</div></div>
-    <div class="cert-row"><div class="cert-age">Age 21–22</div><div class="cert-text">CompTIA Security+ (if needed) — Only if internship requires it</div></div>
-    <div class="cert-row"><div class="cert-age">Age 24–25</div><div class="cert-text">CISM — Enterprise security governance</div></div>
-    <div class="cert-row"><div class="cert-age">Age 25–26</div><div class="cert-text">IAPP AIGP — AI governance, future CIO weapon</div></div>
-    <div class="cert-row"><div class="cert-age">Age 26–27</div><div class="cert-text">SAFe Agilist — Large‑scale transformation leadership</div></div>
-    <div class="cert-row"><div class="cert-age">Age 28–30</div><div class="cert-text">TOGAF — Enterprise architecture, board language</div></div>
-    <div class="cert-row"><div class="cert-age">Age 28–30</div><div class="cert-text">Corporate Finance Certificate — Speak finance better than Python</div></div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── WEALTH ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge gold">Wealth</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title gold">Wealth Timeline</div>
-      </div>
-    </div>
-    <div class="mission"><p>Core Rules: Disciplined execution. Never touch the principal. Ever.</p></div>
-
-    <div class="wealth-row"><div class="w-age">Age 23</div><div class="w-track"><div class="w-fill" style="width:4%"></div><div class="w-dot" style="left:calc(4% - 3px)"></div></div><div class="w-val">Gold begins · 5g/qtr</div></div>
-    <div class="wealth-row"><div class="w-age">Age 24</div><div class="w-track"><div class="w-fill" style="width:6%"></div><div class="w-dot" style="left:calc(6% - 3px)"></div></div><div class="w-val">VOO · AUD 1,500/mo</div></div>
-    <div class="wealth-row"><div class="w-age">Age 25</div><div class="w-track"><div class="w-fill" style="width:9%"></div><div class="w-dot" style="left:calc(9% - 3px)"></div></div><div class="w-val">VOO · AUD 2,500/mo</div></div>
-    <div class="wealth-row"><div class="w-age">Age 27</div><div class="w-track"><div class="w-fill" style="width:14%"></div><div class="w-dot" style="left:calc(14% - 3px)"></div></div><div class="w-val">VOO · AUD 4,000/mo</div></div>
-    <div class="wealth-row"><div class="w-age">Age 29</div><div class="w-track"><div class="w-fill" style="width:20%"></div><div class="w-dot" style="left:calc(20% - 3px)"></div></div><div class="w-val">VOO · AED 5,000/mo</div></div>
-    <div class="wealth-row"><div class="w-age">Age 31</div><div class="w-track"><div class="w-fill" style="width:28%"></div><div class="w-dot" style="left:calc(28% - 3px)"></div></div><div class="w-val">VOO · AED 8,000/mo</div></div>
-    <div class="wealth-row"><div class="w-age">Age 33</div><div class="w-track"><div class="w-fill" style="width:38%"></div><div class="w-dot" style="left:calc(38% - 3px)"></div></div><div class="w-val">VOO · AED 12,000/mo</div></div>
-    <div class="wealth-row"><div class="w-age">Age 35</div><div class="w-track"><div class="w-fill" style="width:50%"></div><div class="w-dot" style="left:calc(50% - 3px)"></div></div><div class="w-val">VOO · AED 15,000/mo</div></div>
-    <div class="wealth-row"><div class="w-age">Age 37</div><div class="w-track"><div class="w-fill" style="width:63%"></div><div class="w-dot" style="left:calc(63% - 3px)"></div></div><div class="w-val">VOO · AED 20,000/mo</div></div>
-    <div class="wealth-row"><div class="w-age">Age 40+</div><div class="w-track"><div class="w-fill" style="width:80%"></div><div class="w-dot" style="left:calc(80% - 3px)"></div></div><div class="w-val">VOO · AED 25,000+/mo</div></div>
-
-    <div class="sub-head" style="margin-top:28px">Net Worth Milestones</div>
-    <div class="milestones">
-      <div class="milestone"><div class="m-age">Age 29</div><div class="m-val">AED 600k–800k</div></div>
-      <div class="milestone"><div class="m-age">Age 32</div><div class="m-val">AED 1.5M ✦</div></div>
-      <div class="milestone"><div class="m-age">Age 36</div><div class="m-val">AED 6M–8M</div></div>
-      <div class="milestone"><div class="m-age">Age 38</div><div class="m-val">AED 12M–15M</div></div>
-      <div class="milestone"><div class="m-age">Age 40</div><div class="m-val">AED 15M–20M</div></div>
-      <div class="milestone"><div class="m-age">Age 45</div><div class="m-val">AED 30M–40M</div></div>
-      <div class="milestone"><div class="m-age">Age 50</div><div class="m-val">AED 60M–80M</div></div>
-      <div class="milestone"><div class="m-age">Age 55</div><div class="m-val">AED 450M–500M</div></div>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── NON-NEGOTIABLES ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge burg">Rules</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title burg">Non‑Negotiables</div>
-        <div class="sec-meta">Break these and the plan breaks with them</div>
-      </div>
-    </div>
-    <div class="rules">
-      <div class="rule-row never"><div class="rule-tag">Never</div><div class="rule-text">Leave Australia before citizenship is secured</div></div>
-      <div class="rule-row never"><div class="rule-tag">Never</div><div class="rule-text">Skip the AUD 2M+ project at Deloitte</div></div>
-      <div class="rule-row never"><div class="rule-tag">Never</div><div class="rule-text">Choose a lesser MBA to save money or time</div></div>
-      <div class="rule-row never"><div class="rule-tag">Never</div><div class="rule-text">Touch the VOO investment — ever</div></div>
-      <div class="rule-row never"><div class="rule-tag">Never</div><div class="rule-text">Let lifestyle inflation eat UAE salary</div></div>
-      <div class="rule-row never"><div class="rule-tag">Never</div><div class="rule-text">Stop building personal brand</div></div>
-      <div class="rule-row never"><div class="rule-tag">Never</div><div class="rule-text">Lose the why behind the plan</div></div>
-      <div class="rule-row always"><div class="rule-tag">Always</div><div class="rule-text">Take the hardest project available</div></div>
-      <div class="rule-row always"><div class="rule-tag">Always</div><div class="rule-text">Build relationships before you need them</div></div>
-      <div class="rule-row always"><div class="rule-tag">Always</div><div class="rule-text">Scale VOO with every salary increase</div></div>
-      <div class="rule-row always"><div class="rule-tag">Always</div><div class="rule-text">Remember the philosophy — borrowed time, purpose, lifting others</div></div>
-      <div class="rule-row always"><div class="rule-tag">Always</div><div class="rule-text">Protect the people you love alongside the plan</div></div>
-    </div>
-  </div>
-
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── ACCELERATORS ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge">Boost</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">The Three Accelerators</div>
-        <div class="sec-meta">These compress the timeline by 3–5 years</div>
-      </div>
-    </div>
-    <div class="accelerators">
-      <div class="acc i">
-        <div class="acc-num">I</div>
-        <div class="acc-title">The Crisis</div>
-        <div class="acc-desc">Find the transformation nobody wants at Director level. Deliver it visibly.</div>
-      </div>
-      <div class="acc ii">
-        <div class="acc-num">II</div>
-        <div class="acc-title">The Sponsor</div>
-        <div class="acc-desc">C‑suite advocate putting your name in rooms you're not in.</div>
-      </div>
-      <div class="acc iii">
-        <div class="acc-num">III</div>
-        <div class="acc-title">The Personal Brand</div>
-        <div class="acc-desc">GITEX speaking, LinkedIn thought leadership, government advisory.</div>
+  <!-- EXPERIENCE -->
+  <div class="sec-wrap" style="background:var(--black2)">
+    <div class="sec-inner">
+      <span class="sec-label reveal">Experience</span>
+      <h2 class="sec-title reveal d1">Where <em>vision</em><br>meets execution</h2>
+      <div class="exp-grid">
+        <div class="exp-card reveal d2">
+          <div class="exp-num">01</div>
+          <div class="exp-role">Founder &amp; Lead Architect</div>
+          <div class="exp-org">Dezai AI</div>
+          <div class="exp-meta">Jan 2026 – Present · Dubai, UAE · Remote</div>
+          <p class="exp-desc">Architected a free AI-powered study platform combining multiple live AI models — no sign-in, no paywall. Built the full web UI in JavaScript &amp; CSS, integrated APIs, and deployed across student networks in India and Dubai. Managing the product roadmap, scaling to classrooms, and mentoring interns while issuing certificates that advance their careers.</p>
+          <div class="tags"><span class="tag">AI</span><span class="tag">Prompt Engineering</span><span class="tag">Product Management</span><span class="tag">JavaScript</span><span class="tag">CSS</span></div>
+        </div>
+        <div class="exp-card reveal d3">
+          <div class="exp-num">02</div>
+          <div class="exp-role">Class Prefect</div>
+          <div class="exp-org">GEMS New Millennium School</div>
+          <div class="exp-meta">Sep 2024 · Dubai, UAE</div>
+          <p class="exp-desc">Elected to represent the class — maintaining discipline, bridging communication between faculty and students, and consistently supporting classmates. Strengthened interpersonal leadership and formal responsibility.</p>
+          <div class="tags"><span class="tag">Leadership</span><span class="tag">Communication</span></div>
+        </div>
+        <div class="exp-card reveal d4">
+          <div class="exp-num">03</div>
+          <div class="exp-role">Aviation Technician — Internship</div>
+          <div class="exp-org">Sarsan Aviation Academy</div>
+          <div class="exp-meta">2023 · Dubai, UAE</div>
+          <p class="exp-desc">Worked alongside skilled aviation professionals on modern electrical system modifications and aircraft performance improvements. Gained deep grounding in precision engineering and high-stakes collaboration — understanding how the smallest component defines an aircraft's functionality.</p>
+          <div class="tags"><span class="tag">Precision Engineering</span><span class="tag">Aviation Mechanics</span><span class="tag">Teamwork</span></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
-
-  <!-- ── ASSETS ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge gold">Assets</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title gold">Complete Asset Picture at 55</div>
+  <!-- SKILLS -->
+  <div class="sec-wrap" style="background:var(--cream)">
+    <div class="sec-inner cream-sec">
+      <span class="sec-label reveal">Skills &amp; Strengths</span>
+      <h2 class="sec-title reveal d1">The <em>arsenal</em><br>of a builder</h2>
+      <div class="skills-grid">
+        <div class="sk-block reveal d1">
+          <div class="sk-title">Technical</div>
+          <ul class="sk-list">
+            <li>Artificial Intelligence</li><li>Prompt Engineering</li><li>Product Management</li>
+            <li>JavaScript &amp; CSS</li><li>Web Development</li><li>Data Analysis</li><li>Business Strategy</li>
+          </ul>
+        </div>
+        <div class="sk-block reveal d2">
+          <div class="sk-title">Leadership</div>
+          <ul class="sk-list">
+            <li>Public Speaking</li><li>MUN — 10+ Conferences</li><li>Event Organisation</li>
+            <li>Team Building</li><li>Networking</li><li>Mentorship</li>
+          </ul>
+        </div>
+        <div class="sk-block reveal d3">
+          <div class="sk-title">Creative</div>
+          <ul class="sk-list">
+            <li>Video &amp; Audio Editing</li><li>Music Composition</li><li>Content Creation</li>
+            <li>420K+ YouTube Views</li><li>Shakespeare Theatre</li><li>Round Square Events</li>
+          </ul>
+        </div>
       </div>
     </div>
-    <table class="assets">
-      <tr><td>VOO S&amp;P 500 Portfolio</td><td>AED 25M – 35M</td></tr>
-      <tr><td>Gold (5g quarterly, 32 years)</td><td>AED 300k – 350k</td></tr>
-      <tr><td>Property portfolio</td><td>AED 10M – 18M</td></tr>
-      <tr><td>Career savings accumulated</td><td>AED 30M – 40M</td></tr>
-      <tr><td>Desai company equity (60%)</td><td>AED 300M – 600M</td></tr>
-      <tr><td>Desai Foundation</td><td>Priceless</td></tr>
-      <tr><td>Total</td><td>AED 370M – 743M</td></tr>
-    </table>
+  </div>
+  <div class="divider-line"></div>
+
+  <!-- EDUCATION -->
+  <div class="sec-wrap" style="background:var(--black)">
+    <div class="sec-inner">
+      <span class="sec-label reveal">Education &amp; Credentials</span>
+      <h2 class="sec-title reveal d1">Built on <em>knowledge</em>,<br>driven by <em>curiosity</em></h2>
+      <div class="edu-row">
+        <div class="edu-col reveal d2">
+          <div class="edu-col-title">Education</div>
+          <div class="edu-item"><div class="edu-name">GEMS New Millennium School</div><div class="edu-detail">Dubai, UAE · 2014 – 2026</div><span class="edu-badge">Physics · Biology · Chemistry</span></div>
+          <div class="edu-item"><div class="edu-name">D. R. Amin Memorial School</div><div class="edu-detail">2012 – 2013</div></div>
+        </div>
+        <div class="edu-col reveal d3">
+          <div class="edu-col-title">Certifications</div>
+          <div class="edu-item"><div class="edu-name">Data Science &amp; Analytics</div><div class="edu-detail">HP LIFE · Mar 2026</div><span class="edu-badge">Data Analysis</span></div>
+          <div class="edu-item"><div class="edu-name">AI for Business Professionals</div><div class="edu-detail">HP LIFE · Mar 2026</div><span class="edu-badge">AI · Business Strategy</span></div>
+          <div class="edu-item"><div class="edu-name">Cisco Netacad Certification</div><div class="edu-detail">Projected 2026</div><span class="edu-badge">In Progress</span></div>
+        </div>
+        <div class="edu-col reveal d4">
+          <div class="edu-col-title">Languages</div>
+          <div class="lang-row">
+            <div class="lang-pill">English<span class="lang-level">Native / Bilingual</span></div>
+            <div class="lang-pill">Gujarati<span class="lang-level">Native</span></div>
+            <div class="lang-pill">Hindi<span class="lang-level">Native</span></div>
+            <div class="lang-pill">Arabic<span class="lang-level">Working</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="divider"><div class="divider-inner">✦ &nbsp; ✦ &nbsp; ✦</div></div>
+  <!-- ══ MASTERPLAN ══ -->
+  <div id="masterplan-sec">
+    <div id="masterplan-inner">
+      <span class="sec-label reveal">The Masterplan</span>
+      <h2 class="sec-title reveal d1">Age 17 <em>→</em> Legacy</h2>
+      <p class="mp-intro reveal d2">The Australia–UAE Pipeline. AI-First Executive Track. Every decision optimised. Every milestone earned. This is not ambition — this is architecture.</p>
 
-  <!-- ── PASSPORT STACK ── -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-badge">Moat</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">The Passport Stack</div>
-        <div class="sec-meta">Your ultimate competitive moat</div>
+      <!-- PHASES accordion -->
+      <div class="phases reveal d3">
+
+        <!-- Phase 0 -->
+        <div class="phase open">
+          <div class="phase-header" onclick="togglePhase(this)">
+            <span class="phase-num">Phase 0</span>
+            <span class="phase-age">Age 17–18</span>
+            <span class="phase-name">Before The Journey Begins</span>
+            <span class="phase-loc">Dubai</span>
+            <span class="phase-chevron">▼</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-content">
+              <div class="phase-grid">
+                <div class="phase-stat"><div class="phase-stat-label">Period</div><div class="phase-stat-value">July 2025 – July 2026</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Location</div><div class="phase-stat-value">Dubai, UAE</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Mission</div><div class="phase-stat-value">Arrive at UOWD as a founder</div></div>
+              </div>
+              <ul class="phase-bullets">
+                <li>Scale DezaiAI to more schools — collect teacher testimonials formally, track usage obsessively</li>
+                <li>Enter UAE startup competitions — even a top-10 placement changes the narrative</li>
+                <li>Complete Cisco NetAcad bundle: CCNA, Cybersecurity Essentials, Python Essentials 1 &amp; 2, Intro to AI &amp; Data Science</li>
+                <li>Rewrite LinkedIn — sharp headline, technical skills first, DezaiAI founder prominent</li>
+                <li>Target 500+ connections before leaving Dubai — be known before you arrive</li>
+                <li>Post weekly: classroom deployments, AI insights, learning journey</li>
+              </ul>
+              <span class="milestone-tag">Milestone: Arrive at UOWD as a founder, not just a student</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 1 -->
+        <div class="phase">
+          <div class="phase-header" onclick="togglePhase(this)">
+            <span class="phase-num">Phase 1</span>
+            <span class="phase-age">Age 18–25</span>
+            <span class="phase-name">The Foundation</span>
+            <span class="phase-loc">Dubai → Wollongong → Sydney → Melbourne</span>
+            <span class="phase-chevron">▼</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-content">
+              <div class="phase-grid">
+                <div class="phase-stat"><div class="phase-stat-label">Degree</div><div class="phase-stat-value">BSc Computer Science (ACS Accredited)</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Target GPA</div><div class="phase-stat-value">3.5+ (Deloitte soft filter — non-negotiable)</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">University Path</div><div class="phase-stat-value">UOWD → UOW Wollongong → Sydney → Melbourne</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Key Certification</div><div class="phase-stat-value">ACS Skills Assessment at Age 20 (critical — do not wait)</div></div>
+              </div>
+              <ul class="phase-bullets">
+                <li>UOWD Year 1 (Age 18–19): Build UAE network, attend Big 4 Dubai office events, post weekly on LinkedIn</li>
+                <li>UOW Years 2–3 (Age 19–21): +5 regional PR points accumulate automatically from day one in Wollongong</li>
+                <li>Apply Deloitte vacation programme between Years 2–3 — treat as a 3-week audition for grad offer</li>
+                <li>AWS Certified Solutions Architect – Associate (Age 20–21)</li>
+                <li>Lodge ACS skills assessment Age 20, Year 2 Sem 2 — result valid 3 years, unlocks everything downstream</li>
+                <li>Bridge Years (Age 21–23): Grad Analyst → Consultant at Deloitte Sydney. AUD 78k–95k gross. Honour NSW commitment early.</li>
+                <li>VOO investing from first paycheck — AUD 1,000–1,500/month. Gold: 5g quarterly from Perth Mint. Never break this habit.</li>
+                <li>Lodge NSW 190 PR at Age 23 with 85 points — near-certain invite within months</li>
+              </ul>
+              <div class="phase-grid" style="margin-top:20px">
+                <div class="phase-stat"><div class="phase-stat-label">PR Points at Age 23</div><div class="phase-stat-value">85 Points (near-certain invite)</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Masters Tuition</div><div class="phase-stat-value">AED 0 upfront — full HECS from Day 1 (PR at 24)</div></div>
+              </div>
+              <span class="milestone-tag">Milestone: PR Granted Age 24 · Citizenship clock starts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase">
+          <div class="phase-header" onclick="togglePhase(this)">
+            <span class="phase-num">Phase 2</span>
+            <span class="phase-age">Age 27–30</span>
+            <span class="phase-name">The Deloitte Years</span>
+            <span class="phase-loc">Melbourne, Australia</span>
+            <span class="phase-chevron">▼</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-content">
+              <div class="phase-grid">
+                <div class="phase-stat"><div class="phase-stat-label">Entry Level</div><div class="phase-stat-value">Senior Consultant (not grad — 4 years experience)</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Masters</div><div class="phase-stat-value">MSc Information Systems, University of Melbourne</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Take-home (Age 27–28)</div><div class="phase-stat-value">AED 18,500–21,200/month</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Net Worth Target</div><div class="phase-stat-value">AED 490k–600k → AED 950k–1.2M</div></div>
+              </div>
+              <ul class="phase-bullets">
+                <li>Enter Deloitte Melbourne post-Masters with 4 years Big 4 experience — not as a graduate analyst</li>
+                <li>Complete IAPP AIGP (AI Governance Professional) — rare credential, future CIO weapon</li>
+                <li>Lead at least one project with budget &gt; AUD 2M — NON-NEGOTIABLE. Core MBA essay. Core CIO credential.</li>
+                <li>Complete CISM by Age 25. SAFe Agilist for large-scale transformation leadership.</li>
+                <li>Australian Citizenship secured Age 27–28 — do not leave Australia before this. Non-negotiable.</li>
+                <li>Apply OCI Card immediately after citizenship (~AED 1,360). Lifelong India access secured.</li>
+                <li>VOO: AUD 3,000–5,000/month scaled with every pay rise</li>
+              </ul>
+              <span class="milestone-tag">Milestone: Australian Citizenship Age 27–28 · Three documents assembled</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase">
+          <div class="phase-header" onclick="togglePhase(this)">
+            <span class="phase-num">Phase 3</span>
+            <span class="phase-age">Age 30–32</span>
+            <span class="phase-name">The MBA Bridge</span>
+            <span class="phase-loc">UAE</span>
+            <span class="phase-chevron">▼</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-content">
+              <div class="phase-grid">
+                <div class="phase-stat"><div class="phase-stat-label">Target MBA</div><div class="phase-stat-value">INSEAD Abu Dhabi (backup: LBS Dubai)</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">MBA Cost</div><div class="phase-stat-value">AUD 120k–140k — funded from Deloitte Manager savings</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Arriving With</div><div class="phase-stat-value">Australian citizenship + 9 yrs experience + AED 950k–1.2M net worth</div></div>
+              </div>
+              <ul class="phase-bullets">
+                <li>You are not a student arriving in UAE — you are a credentialed professional returning home</li>
+                <li>INSEAD cohort = future CEOs, ministers, sovereign wealth fund MDs, serial founders. The MBA is the network.</li>
+                <li>Corporate Finance Certificate (CFA Institute or HBS Online) — speak finance better than Python</li>
+                <li>Complete TOGAF — enterprise architecture, the language boards and CIOs speak</li>
+                <li>Target: Majid Al Futtaim, e&amp;, ADNOC Digital, Emirates Group, PwC Middle East</li>
+                <li>If Deloitte internal transfer available at Manager level — take it immediately. Enter UAE at AED 65k–85k/month.</li>
+              </ul>
+              <span class="milestone-tag">Milestone: UAE Golden Visa · First AED Millionaire approaching</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="phase">
+          <div class="phase-header" onclick="togglePhase(this)">
+            <span class="phase-num">Phase 4</span>
+            <span class="phase-age">Age 31–40</span>
+            <span class="phase-name">The UAE Acceleration</span>
+            <span class="phase-loc">UAE — Zero Tax. Maximum Velocity.</span>
+            <span class="phase-chevron">▼</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-content">
+              <div class="phase-grid">
+                <div class="phase-stat"><div class="phase-stat-label">Age 31–32 Salary</div><div class="phase-stat-value">AED 50k–65k/month (tax free)</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">First Millionaire</div><div class="phase-stat-value">AED 1.5M net worth — Age 31–32</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Age 36–38 Salary</div><div class="phase-stat-value">AED 85k–100k/month → AED 1M+/year</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Age 40 Net Worth</div><div class="phase-stat-value">AED 12M–15M (Desai launch capital)</div></div>
+              </div>
+              <ul class="phase-bullets">
+                <li>Apply UAE Golden Visa the moment salary ≥ AED 30k/month — Australian Passport + Golden Visa = total untouchability</li>
+                <li>Every conversation framed around revenue, cost, risk — never servers, never code</li>
+                <li>GITEX speaking slots begin — even small panels compound. Start now.</li>
+                <li>Director of Technology (Age 34–36): Own a crisis. Find the transformation nobody wants and deliver it under pressure.</li>
+                <li>Government digital-transformation advisory roles — these relationships compound over decades</li>
+                <li>Desai Automotive research begins quietly: industry mapping, talent ID, technology landscape</li>
+                <li>VOO scaled to AED 12,000–20,000/month. Never touch the principal. Ever.</li>
+                <li>Property investment decision: Dubai or Australia. Make this call by Age 35.</li>
+              </ul>
+              <span class="milestone-tag">Milestone: AED 1.5M net worth Age 31–32 · First AED 1M+/year salary Age 36–38</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="phase">
+          <div class="phase-header" onclick="togglePhase(this)">
+            <span class="phase-num">Phase 5</span>
+            <span class="phase-age">Age 40–44</span>
+            <span class="phase-name">Desai Launch + Group CIO</span>
+            <span class="phase-loc">UAE &amp; Beyond</span>
+            <span class="phase-chevron">▼</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-content">
+              <div class="phase-grid">
+                <div class="phase-stat"><div class="phase-stat-label">CIO Base Annual</div><div class="phase-stat-value">AED 1.65M–2.1M (tax free)</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Total Package</div><div class="phase-stat-value">AED 2.55M–3.75M inc. bonus</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">CIO Target</div><div class="phase-stat-value">ADNOC, Emirates Group, Majid Al Futtaim, DEWA</div></div>
+              </div>
+              <ul class="phase-bullets">
+                <li>Desai Automotive launches Age 40 — world's first AI-native luxury atelier. "AI and craftsmanship are partners, not opposites."</li>
+                <li>Phase 1 Bikes: Dubai modification house — Ducati, MV Agusta, custom Harley builds. 10–15 royal commissions annually.</li>
+                <li>AI generative design, predictive performance, digital twins for every commission</li>
+                <li>Phase 2 Cars: Rolls Royce, Bentley, Mercedes-AMG, Lamborghini, Bugatti platforms. 5–8 commissions annually.</li>
+                <li>Desai Foundation launches: AI/STEM scholarships, Gujarat pediatric hospital planning begins</li>
+                <li>"Made in UAE. Engineered by AI. Finished by hand."</li>
+              </ul>
+              <span class="milestone-tag">Milestone: Group CIO + Desai Automotive live · AED 12M–15M net worth</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 6 -->
+        <div class="phase">
+          <div class="phase-header" onclick="togglePhase(this)">
+            <span class="phase-num">Phase 6</span>
+            <span class="phase-age">Age 44–57</span>
+            <span class="phase-name">The Empire</span>
+            <span class="phase-loc">UAE &amp; Global</span>
+            <span class="phase-chevron">▼</span>
+          </div>
+          <div class="phase-body">
+            <div class="phase-content">
+              <div class="phase-grid">
+                <div class="phase-stat"><div class="phase-stat-label">Net Worth Age 44</div><div class="phase-stat-value">AED 25M–35M</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Desai Revenue Yr 6–10</div><div class="phase-stat-value">AED 130M–200M</div></div>
+                <div class="phase-stat"><div class="phase-stat-label">Net Worth Age 57</div><div class="phase-stat-value">AED 370M–743M</div></div>
+              </div>
+              <ul class="phase-bullets">
+                <li>Desai Automotive scales from 10–15 bike commissions to 50–80 annually</li>
+                <li>Desai Foundation: education scholarships across AI, technology, STEM for underprivileged students</li>
+                <li>Gujarat pediatric hospital — the childhood dream takes physical form</li>
+                <li>Foundation endowment established with proper governance</li>
+                <li>VOO portfolio: AED 25M–35M (34 years compounding)</li>
+                <li>Total assets: VOO + Gold + Property + Career savings + Desai equity = AED 370M–743M</li>
+              </ul>
+              <span class="milestone-tag">Milestone: AED 370M–743M total assets · Desai Foundation · Legacy complete</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /phases -->
+
+      <!-- WEALTH TABLE -->
+      <div class="reveal" style="margin-top:72px">
+        <span class="sec-label">Wealth Timeline</span>
+        <h3 class="sec-title" style="font-size:clamp(22px,3vw,32px);margin-bottom:0">The <em>compounding</em> of discipline</h3>
       </div>
-    </div>
-    <div class="passports">
-      <div class="passport au">
-        <div class="p-flag">🇦🇺</div>
-        <div class="p-name">Australian Passport</div>
-        <div class="p-desc">Western credibility, global mobility, GCC premium</div>
+      <table class="wealth-table reveal d2">
+        <thead><tr><th>Age</th><th>Monthly VOO</th><th>Net Worth Target</th></tr></thead>
+        <tbody>
+          <tr><td>21–23</td><td>AUD 1,000–1,500/mo + Gold 5g quarterly</td><td>AED 50k–100k</td></tr>
+          <tr><td>24–25</td><td>AUD 2,000–2,500/mo</td><td>AED 150k–250k</td></tr>
+          <tr><td>27–28</td><td>AUD 3,000/mo</td><td>AED 490k–600k</td></tr>
+          <tr><td>29–30</td><td>AUD 4,000–5,000/mo</td><td>AED 950k–1.2M</td></tr>
+          <tr><td>31–32</td><td>AED 5,000/mo</td><td style="color:var(--gold-light);font-weight:600">AED 1.5M — First Millionaire 🏆</td></tr>
+          <tr><td>33–34</td><td>AED 8,000/mo</td><td>AED 3M–4M</td></tr>
+          <tr><td>36–38</td><td>AED 15,000/mo</td><td>AED 10M–12M</td></tr>
+          <tr><td>40</td><td>AED 20,000/mo</td><td>AED 12M–15M</td></tr>
+          <tr><td>47</td><td>AED 25,000+/mo</td><td>AED 30M–40M</td></tr>
+          <tr><td>57</td><td>—</td><td style="color:var(--gold-light);font-weight:600">AED 370M–743M</td></tr>
+        </tbody>
+      </table>
+
+      <!-- NON-NEGOTIABLES -->
+      <div class="reveal" style="margin-top:72px">
+        <span class="sec-label">The Rules</span>
+        <h3 class="sec-title" style="font-size:clamp(22px,3vw,32px);margin-bottom:0"><em>Never</em> &amp; <em>Always</em></h3>
       </div>
-      <div class="passport ae">
-        <div class="p-flag">🇦🇪</div>
-        <div class="p-name">UAE Golden Visa</div>
-        <div class="p-desc">10‑year residency, employer‑independent, negotiating freedom</div>
+      <div class="nn-grid reveal d2">
+        <div class="nn-col">
+          <div class="nn-col-title">Never</div>
+          <ul class="nn-list">
+            <li>Leave Australia before citizenship is secured (Age 27–28)</li>
+            <li>Skip the AUD 2M+ project at Deloitte — it is your MBA essay and CIO credential</li>
+            <li>Choose a lesser MBA to save money or time</li>
+            <li>Touch the VOO investment principal — ever, under any circumstances</li>
+            <li>Let lifestyle inflation eat UAE salary — you are building an empire</li>
+            <li>Stop building personal brand</li>
+            <li>Move out of NSW before honouring 190 state commitment</li>
+          </ul>
+        </div>
+        <div class="nn-col">
+          <div class="nn-col-title">Always</div>
+          <ul class="nn-list">
+            <li>Take the hardest project available</li>
+            <li>Build relationships before you need them</li>
+            <li>Scale VOO with every single salary increase</li>
+            <li>Lodge ACS assessment at Age 20 — not final semester</li>
+            <li>Start Gold (5g quarterly) from first paycheck in bridge years</li>
+            <li>Apply for OCI card immediately after Australian citizenship</li>
+            <li>Protect the people you love alongside the plan</li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="mission"><p>Together — Complete untouchability in any market, anywhere.</p></div>
-  </div>
 
-  <!-- ── ONE LINE SUMMARY ── -->
-  <div class="sec" style="margin-top:36px">
-    <div class="sec-head">
-      <div class="sec-badge">Summary</div>
-      <div class="sec-title-wrap">
-        <div class="sec-title">The One‑Line Summary</div>
+      <!-- One line summary -->
+      <div class="reveal d3" style="margin-top:64px;text-align:center;border:1px solid rgba(201,146,42,.15);padding:40px 32px">
+        <p style="font-family:var(--royal);font-size:clamp(11px,1.5vw,14px);letter-spacing:.18em;color:rgba(201,146,42,.6);text-transform:uppercase;margin-bottom:16px">The One-Line Summary</p>
+        <p style="font-family:var(--serif);font-style:italic;font-size:clamp(15px,2vw,20px);color:rgba(250,246,238,.75);line-height:1.8">
+          Australian-credentialed. Deloitte-trained. INSEAD-networked. AI-governed.<br>
+          OCI-connected. Crisis-tested. Desai-founding Group CIO. Golden-Visa protected. Purpose-driven.
+        </p>
       </div>
+
     </div>
-    <p class="prose" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--navy);">
-      Australian‑credentialed. Deloitte‑trained. INSEAD‑networked. AI‑governed. Crisis‑tested. Desai‑founding Group CIO. Golden‑Visa protected. Purpose‑driven.
-    </p>
-  </div>
+  </div><!-- /masterplan -->
 
-  <!-- ── FINAL WORD ── -->
-  <div class="final">
-    <div class="final-ornament">✦ &nbsp;&nbsp;&nbsp; ✦ &nbsp;&nbsp;&nbsp; ✦</div>
-
-    <div class="final-lines">
-      <div class="f-line">The career makes you <strong>successful.</strong></div>
-      <div class="f-line gold">The investments make you <strong>wealthy.</strong></div>
-      <div class="f-line">The passport makes you <strong>untouchable.</strong></div>
-      <div class="f-line burg">Desai makes you <strong>legendary.</strong></div>
-      <div class="f-line forest">The Foundation makes you <strong>immortal.</strong></div>
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="grule"></div>
+    <div class="f-name">Dhairya Desai</div>
+    <div class="f-sub">Founder, Dezai AI · Dubai, UAE</div>
+    <div class="f-quote">"Worry is overpriced. Life is priceless."</div>
+    <div class="f-links">
+      <a href="https://dezaiai.created.app" target="_blank">dezaiai.created.app</a>
+      <a href="#">@dezai.ai</a>
+      <a href="#">GEMS New Millennium School</a>
     </div>
+    <div class="grule" style="margin-top:32px"></div>
+    <p class="f-copy">© 2026 Dhairya Desai · Planning started Age 17 · Desai launches Age 40</p>
+  </footer>
 
-    <div class="quote-block">
-      <p>"We are born, we work, we live, we go — but in this little duration if we can contribute to whatever brought us here, that is the greatest deed you can ever perform."</p>
-    </div>
+</div><!-- /site -->
 
-    <div class="timestamps">
-      <div class="ts">Planning started <span>Age 17, July 2026</span></div>
-      <div class="ts">DezaiAI <span>Live through Year 1</span></div>
-      <div class="ts">Desai <span>Launches Age 38</span></div>
-      <div class="ts">The journey <span>Already begun</span></div>
-    </div>
+<script>
+// Intro sequence
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{
+    document.getElementById('intro').classList.add('fadeout');
+  }, 2400);
+});
 
-    <div class="final-coda">The only variable left is time. And you have plenty of it.</div>
-  </div>
+// Phase accordion
+function togglePhase(header){
+  const phase = header.parentElement;
+  phase.classList.toggle('open');
+}
 
-  </div><!-- /content -->
-</div><!-- /page -->
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+},{threshold:.1,rootMargin:'0px 0px -36px 0px'});
+reveals.forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
