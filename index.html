@@ -3,1228 +3,837 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Desai Master Plan</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>Dhairya Desai — Founder · Innovator · Visionary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --gold: #C9A84C;
-    --gold-light: #E8C97A;
-    --gold-dim: #8B6E2F;
-    --black: #050505;
-    --dark: #0A0A0A;
-    --dark2: #111111;
-    --dark3: #181818;
-    --white: #F5F0E8;
-    --white-dim: rgba(245,240,232,0.6);
-    --white-faint: rgba(245,240,232,0.08);
-  }
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: 'Syne', sans-serif;
-    cursor: none;
-    overflow-x: hidden;
-  }
-
-  /* ── CURSOR ── */
-  #cursor-dot {
-    position: fixed; top: 0; left: 0;
-    width: 8px; height: 8px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.05s;
-    mix-blend-mode: difference;
-  }
-
-  #cursor-ring {
-    position: fixed; top: 0; left: 0;
-    width: 40px; height: 40px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: transform 0.12s ease, width 0.3s, height 0.3s, opacity 0.3s;
-    opacity: 0.7;
-  }
-
-  #cursor-mask {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 9997;
-    background: radial-gradient(circle 120px at var(--mx, -200px) var(--my, -200px),
-      rgba(201,168,76,0.05) 0%,
-      transparent 70%);
-    transition: background 0.05s;
-  }
-
-  body.hovering #cursor-ring {
-    width: 70px; height: 70px;
-    opacity: 0.4;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 1000;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 28px 60px;
-    background: linear-gradient(to bottom, rgba(5,5,5,0.95), transparent);
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    text-transform: uppercase;
-  }
-
-  .nav-links {
-    display: flex; gap: 40px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--white-dim);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
-  .nav-links a:hover { color: var(--gold); }
-
-  /* ── SECTIONS ── */
-  section {
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* ── HERO ── */
-  #hero {
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: flex-start;
-    padding: 0 10vw;
-    background: var(--black);
-  }
-
-  .hero-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.4em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 1s 0.3s forwards;
-  }
-
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(4rem, 10vw, 10rem);
-    font-weight: 300;
-    line-height: 0.9;
-    letter-spacing: -0.02em;
-    color: var(--white);
-    opacity: 0;
-    animation: fadeUp 1s 0.5s forwards;
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-
-  .hero-subtitle {
-    margin-top: 40px;
-    font-size: 0.8rem;
-    letter-spacing: 0.25em;
-    color: var(--white-dim);
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 1s 0.8s forwards;
-  }
-
-  .hero-line {
-    position: absolute;
-    right: 10vw; bottom: 15vh;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.15em;
-    writing-mode: vertical-rl;
-    opacity: 0;
-    animation: fadeIn 1.5s 1.2s forwards;
-  }
-
-  .hero-scroll-indicator {
-    position: absolute;
-    bottom: 50px; left: 10vw;
-    display: flex; align-items: center; gap: 16px;
-    opacity: 0;
-    animation: fadeIn 1s 1.5s forwards;
-  }
-
-  .scroll-line {
-    width: 60px; height: 1px;
-    background: var(--gold);
-    animation: expandLine 1.5s 1.8s ease forwards;
-    transform-origin: left;
-    transform: scaleX(0);
-  }
-
-  .scroll-text {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    text-transform: uppercase;
-  }
-
-  .hero-bg-text {
-    position: absolute;
-    right: -2vw; top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(8rem, 20vw, 22rem);
-    font-weight: 300;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(201,168,76,0.06);
-    user-select: none;
-    pointer-events: none;
-    letter-spacing: -0.05em;
-    line-height: 1;
-  }
-
-  /* ── PROFILE SECTION ── */
-  #profile {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 100vh;
-    background: var(--dark2);
-  }
-
-  .profile-image-side {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .profile-image-side::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, transparent 50%, rgba(5,5,5,0.5) 100%);
-    z-index: 1;
-  }
-
-  .profile-image-side::after {
-    content: '';
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 100px;
-    background: linear-gradient(to right, transparent, var(--dark2));
-    z-index: 2;
-  }
-
-  .profile-img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    filter: grayscale(20%) contrast(1.05);
-    transition: filter 0.5s;
-  }
-
-  .profile-img:hover { filter: grayscale(0%) contrast(1.1); }
-
-  .profile-content-side {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 80px 80px 60px;
-    position: relative;
-  }
-
-  .profile-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.4em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-
-  .profile-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 5vw, 5rem);
-    font-weight: 300;
-    line-height: 1;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-
-  .profile-name span {
-    color: var(--gold-light);
-    font-style: italic;
-  }
-
-  .profile-age {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.2em;
-    margin-bottom: 40px;
-  }
-
-  .profile-bio {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: var(--white-dim);
-    margin-bottom: 48px;
-    font-style: italic;
-  }
-
-  .profile-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-bottom: 48px;
-  }
-
-  .stat-item {
-    border-left: 1px solid rgba(201,168,76,0.3);
-    padding-left: 16px;
-  }
-
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--white-dim);
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  .profile-tags {
-    display: flex; flex-wrap: wrap; gap: 10px;
-  }
-
-  .ptag {
-    padding: 6px 16px;
-    border: 1px solid rgba(201,168,76,0.3);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border-radius: 0;
-    transition: background 0.3s, color 0.3s;
-  }
-
-  .ptag:hover {
-    background: var(--gold);
-    color: var(--black);
-  }
-
-  /* ── SEPARATOR ── */
-  .section-separator {
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-    opacity: 0.3;
-  }
-
-  /* ── TIMELINE SECTION ── */
-  #timeline {
-    background: var(--dark);
-    padding: 120px 10vw;
-  }
-
-  .section-header {
-    display: flex; align-items: baseline; gap: 24px;
-    margin-bottom: 80px;
-  }
-
-  .section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.3em;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 5vw, 5rem);
-    font-weight: 300;
-    color: var(--white);
-    letter-spacing: -0.02em;
-  }
-
-  .section-title em {
-    color: var(--gold-light);
-    font-style: italic;
-  }
-
-  .timeline-grid {
-    display: grid;
-    gap: 0;
-  }
-
-  .timeline-item {
-    display: grid;
-    grid-template-columns: 140px 1px 1fr;
-    gap: 0 32px;
-    padding: 40px 0;
-    border-top: 1px solid rgba(245,240,232,0.05);
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s, transform 0.6s;
-  }
-
-  .timeline-item.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .timeline-age {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 300;
-    color: var(--gold);
-    line-height: 1;
-    text-align: right;
-  }
-
-  .timeline-age small {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.2em;
-    margin-top: 4px;
-  }
-
-  .timeline-divider {
-    width: 1px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    margin: 4px 0;
-    position: relative;
-  }
-
-  .timeline-divider::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 7px; height: 7px;
-    background: var(--gold);
-    border-radius: 50%;
-  }
-
-  .timeline-content {
-    padding-bottom: 16px;
-  }
-
-  .timeline-milestone {
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: 0.03em;
-    margin-bottom: 8px;
-  }
-
-  .timeline-detail {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--white-dim);
-    font-style: italic;
-    line-height: 1.6;
-  }
-
-  .timeline-networth {
-    margin-top: 12px;
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--gold);
-    padding: 4px 12px;
-    border: 1px solid rgba(201,168,76,0.3);
-  }
-
-  /* ── PHASES SECTION ── */
-  #phases {
-    background: var(--black);
-    padding: 120px 10vw;
-  }
-
-  .phases-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 60px;
-  }
-
-  .phase-card {
-    background: var(--dark3);
-    padding: 48px 36px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.4s;
-    cursor: default;
-  }
-
-  .phase-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s ease;
-  }
-
-  .phase-card:hover { transform: translateY(-4px); }
-  .phase-card:hover::before { transform: scaleX(1); }
-
-  .phase-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 5rem;
-    font-weight: 300;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(201,168,76,0.2);
-    line-height: 1;
-    margin-bottom: 24px;
-  }
-
-  .phase-ages {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .phase-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 16px;
-  }
-
-  .phase-desc {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    color: var(--white-dim);
-    font-style: italic;
-    line-height: 1.7;
-  }
-
-  /* ── WEALTH SECTION ── */
-  #wealth {
-    background: var(--dark2);
-    padding: 120px 10vw;
-  }
-
-  .wealth-bars {
-    margin-top: 60px;
-    display: grid;
-    gap: 24px;
-  }
-
-  .wealth-row {
-    display: grid;
-    grid-template-columns: 80px 1fr 180px;
-    align-items: center;
-    gap: 24px;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.6s, transform 0.6s;
-  }
-
-  .wealth-row.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .wealth-age {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: var(--gold);
-    text-align: right;
-  }
-
-  .wealth-bar-track {
-    height: 2px;
-    background: rgba(245,240,232,0.06);
-    position: relative;
-    border-radius: 0;
-  }
-
-  .wealth-bar-fill {
-    height: 100%;
-    background: linear-gradient(to right, var(--gold-dim), var(--gold-light));
-    width: 0%;
-    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .wealth-amount {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    text-align: right;
-  }
-
-  /* ── NON-NEGOTIABLES ── */
-  #rules {
-    background: var(--black);
-    padding: 120px 10vw;
-  }
-
-  .rules-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    margin-top: 60px;
-  }
-
-  .rules-column h3 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid rgba(201,168,76,0.3);
-  }
-
-  .rules-column.never h3 { color: #C94C4C; }
-  .rules-column.always h3 { color: var(--gold); }
-
-  .rule-item {
-    display: flex; align-items: flex-start; gap: 16px;
-    padding: 16px 0;
-    border-bottom: 1px solid rgba(245,240,232,0.04);
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-
-  .rule-item.visible { opacity: 1; }
-
-  .rule-icon {
-    width: 20px; height: 20px;
-    flex-shrink: 0;
-    margin-top: 2px;
-    font-size: 0.7rem;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .rule-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--white-dim);
-    line-height: 1.5;
-  }
-
-  /* ── QUOTE SECTION ── */
-  #quote-section {
-    background: var(--dark);
-    padding: 160px 15vw;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .quote-bg {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 30vw;
-    font-weight: 300;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(201,168,76,0.03);
-    user-select: none;
-    pointer-events: none;
-  }
-
-  .quote-mark {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 8rem;
-    color: var(--gold);
-    opacity: 0.3;
-    line-height: 0.5;
-    display: block;
-    margin-bottom: 24px;
-  }
-
-  .quote-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.3rem, 3vw, 2rem);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--white);
-    line-height: 1.8;
-    max-width: 800px;
-    margin: 0 auto 40px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .quote-attr {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    text-transform: uppercase;
-    position: relative; z-index: 1;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--black);
-    padding: 60px 10vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(201,168,76,0.1);
-  }
-
-  .footer-brand {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-  }
-
-  .footer-brand span {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.4em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  .footer-info {
-    text-align: right;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    color: var(--white-dim);
-    letter-spacing: 0.15em;
-    line-height: 2;
-  }
-
-  /* ── TRANSITIONS (PAGE TRANSITION OVERLAY) ── */
-  .page-loader {
-    position: fixed; inset: 0;
-    z-index: 99999;
-    background: var(--black);
-    display: flex; align-items: center; justify-content: center;
-    animation: loaderOut 0.8s 1.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-  }
-
-  .loader-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.5rem, 5vw, 4rem);
-    font-weight: 300;
-    color: var(--gold);
-    letter-spacing: 0.5em;
-    animation: loaderPulse 1.4s ease infinite;
-  }
-
-  .loader-bar {
-    position: absolute;
-    bottom: 0; left: 0;
-    height: 1px;
-    background: var(--gold);
-    animation: loaderBar 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  /* ── KEYFRAMES ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes expandLine {
-    to { transform: scaleX(1); }
-  }
-
-  @keyframes loaderOut {
-    to { transform: translateY(-100%); }
-  }
-
-  @keyframes loaderPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  @keyframes loaderBar {
-    from { width: 0; }
-    to { width: 100%; }
-  }
-
-  /* ── DOCUMENT STACK ── */
-  #documents {
-    background: var(--dark3);
-    padding: 120px 10vw;
-  }
-
-  .docs-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 60px;
-  }
-
-  .doc-card {
-    background: var(--dark);
-    padding: 48px 36px;
-    border-top: 1px solid rgba(201,168,76,0.15);
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s;
-  }
-
-  .doc-card:hover { border-color: rgba(201,168,76,0.6); }
-
-  .doc-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; right: 0;
-    width: 80px; height: 80px;
-    border-bottom: 1px solid rgba(201,168,76,0.1);
-    border-right: 1px solid rgba(201,168,76,0.1);
-  }
-
-  .doc-emoji {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    display: block;
-    filter: grayscale(50%);
-  }
-
-  .doc-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: 0.05em;
-    margin-bottom: 12px;
-  }
-
-  .doc-subtitle {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    color: var(--gold);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .doc-desc {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    color: var(--white-dim);
-    font-style: italic;
-    line-height: 1.6;
-  }
-
-  .doc-when {
-    margin-top: 20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.15em;
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    nav { padding: 24px 24px; }
-    .nav-links { display: none; }
-    #profile { grid-template-columns: 1fr; }
-    .profile-image-side { height: 60vh; }
-    .profile-content-side { padding: 60px 24px; }
-    .phases-grid { grid-template-columns: 1fr; }
-    .docs-grid { grid-template-columns: 1fr; }
-    .rules-grid { grid-template-columns: 1fr; }
-    .timeline-item { grid-template-columns: 80px 1px 1fr; }
-    #timeline, #phases, #wealth, #rules, #documents, #quote-section { padding: 80px 6vw; }
-    footer { flex-direction: column; gap: 24px; text-align: center; }
-    .footer-info { text-align: center; }
-  }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A84C;--gold-light:#E8C97A;
+  --teal:#4ECCA3;
+  --bg:#040404;--text:#F5F0E8;--muted:rgba(245,240,232,0.5);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;cursor:none;overflow-x:hidden}
+ 
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:10000;background:#020202;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1.4s cubic-bezier(0.76,0,0.24,1),visibility 1.4s}
+#loader.out{opacity:0;visibility:hidden;pointer-events:none}
+#lc{position:absolute;inset:0}
+.lcon{position:relative;z-index:1;text-align:center}
+.lgw{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,11vw,9rem);font-weight:300;letter-spacing:0.38em;text-transform:uppercase;position:relative;display:inline-block;color:transparent;-webkit-text-stroke:1px rgba(201,168,76,0.2)}
+.lgw::before{content:attr(data-text);position:absolute;inset:0;background:linear-gradient(90deg,var(--teal),var(--gold-light));-webkit-background-clip:text;background-clip:text;color:transparent;clip-path:inset(0 100% 0 0);animation:revM 2.4s cubic-bezier(0.76,0,0.18,1) 0.4s forwards}
+.lgw::after{content:attr(data-text);position:absolute;inset:0;color:var(--teal);opacity:0;animation:gaf 5s ease 3s infinite;transform:skewX(-2deg)}
+@keyframes revM{to{clip-path:inset(0 0% 0 0)}}
+@keyframes gaf{0%,92%,100%{opacity:0}94%{opacity:0.35;transform:skewX(-4deg) translateX(-5px)}96%{opacity:0.15;transform:skewX(3deg) translateX(4px)}98%{opacity:0}}
+.lsub{margin-top:2rem;font-size:.54rem;letter-spacing:.48em;text-transform:uppercase;color:rgba(78,204,163,0.45);opacity:0;animation:fu .8s ease 2.8s forwards;font-family:'Space Mono',monospace}
+.lbw{width:220px;height:1px;background:rgba(201,168,76,0.08);margin:1.8rem auto 0;overflow:hidden;opacity:0;animation:fu .3s ease 2.8s forwards}
+.lbf{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold-light));animation:lb 2.2s ease 3s forwards;box-shadow:0 0 8px var(--teal)}
+@keyframes lb{to{width:100%}}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+ 
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--teal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;box-shadow:0 0 14px var(--teal),0 0 4px var(--teal);transition:width .15s,height .15s,background .2s}
+#cring{position:fixed;width:36px;height:36px;border:1px solid rgba(78,204,163,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s,border-radius .3s}
+body:has(a:hover) #cur,body:has(button:hover) #cur{width:20px;height:20px;background:var(--gold);box-shadow:0 0 20px var(--gold)}
+body:has(a:hover) #cring,body:has(button:hover) #cring{width:52px;height:52px;border-color:var(--gold);border-radius:4px}
+ 
+/* SCROLL PROGRESS */
+#prog{position:fixed;top:0;left:0;height:1.5px;z-index:9996;width:0%;background:linear-gradient(90deg,var(--teal),var(--gold),var(--teal));box-shadow:0 0 8px var(--teal);transition:width .05s}
+ 
+/* NOISE */
+#noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.022;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+ 
+/* CANVASES */
+#bgc{position:fixed;inset:0;z-index:0}
+#tc{position:fixed;inset:0;z-index:0;pointer-events:none}
+ 
+/* PAGE TRANSITION */
+#pt{position:fixed;inset:0;z-index:5000;pointer-events:none;background:linear-gradient(135deg,var(--teal),var(--gold));transform:scaleY(0);transform-origin:bottom;will-change:transform}
+ 
+/* KONAMI */
+#km{position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,0.96);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#km.show{display:flex}
+#km h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,4rem);color:var(--teal);margin-bottom:1rem;letter-spacing:.08em}
+#km p{font-size:.82rem;color:var(--muted);max-width:420px;line-height:1.9}
+#km .code{margin-top:1rem;font-family:'Space Mono',monospace;font-size:.55rem;color:var(--teal);letter-spacing:.2em}
+#kmc{margin-top:2rem;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:.6rem 1.5rem;cursor:none;background:none;font-family:'Space Mono',monospace;transition:all .3s}
+#kmc:hover{border-color:var(--gold);color:var(--gold-light)}
+ 
+/* EASTER EGG HINT */
+#ee{position:fixed;bottom:1.8rem;right:2rem;z-index:500;font-family:'Space Mono',monospace;font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(78,204,163,0.06);cursor:none;transition:color .4s;user-select:none}
+#ee:hover{color:rgba(78,204,163,0.25)}
+ 
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;height:68px;backdrop-filter:blur(28px) saturate(1.5);background:rgba(4,4,4,0.72);border-bottom:1px solid rgba(78,204,163,0.07);transform:translateY(-100%);animation:nIn 1s cubic-bezier(0.76,0,0.24,1) 5.6s forwards}
+@keyframes nIn{to{transform:translateY(0)}}
+.nl{display:flex;align-items:center;gap:.8rem;text-decoration:none}
+.nlimg{width:30px;height:30px;filter:drop-shadow(0 0 8px rgba(78,204,163,0.55));transition:filter .3s,transform .4s cubic-bezier(0.34,1.56,0.64,1)}
+.nl:hover .nlimg{filter:drop-shadow(0 0 18px rgba(78,204,163,1));transform:rotate(20deg) scale(1.2)}
+.nlt{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;transition:color .3s}
+.nl:hover .nlt{color:var(--teal)}
+nav ul{display:flex;gap:2rem;list-style:none}
+nav ul a{font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;position:relative;transition:color .3s;padding:.2rem 0}
+nav ul a::before{content:'';position:absolute;bottom:-2px;left:50%;right:50%;height:1px;background:var(--teal);transition:left .3s,right .3s;box-shadow:0 0 6px var(--teal)}
+nav ul a:hover{color:var(--teal)}
+nav ul a:hover::before{left:0;right:0}
+.ntog{display:none;background:none;border:none;cursor:none;flex-direction:column;gap:5px}
+.ntog span{display:block;width:22px;height:1px;background:var(--gold);transition:all .3s}
+@media(max-width:780px){
+  .ntog{display:flex}
+  nav ul{position:fixed;top:68px;left:0;right:0;flex-direction:column;gap:0;background:rgba(4,4,4,.98);border-bottom:1px solid rgba(78,204,163,.08);padding:1.5rem 4vw;transform:translateY(-130%);transition:transform .4s;z-index:999}
+  nav ul.open{transform:translateY(0)}
+  nav ul a{font-size:.76rem;padding:.8rem 0;border-bottom:1px solid rgba(78,204,163,.04);display:block}
+}
+ 
+main{position:relative;z-index:1}
+ 
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 2rem 5rem;position:relative;overflow:hidden}
+.hbgt{position:absolute;font-family:'Cormorant Garamond',serif;font-size:clamp(10rem,28vw,26rem);font-weight:300;letter-spacing:.18em;color:rgba(78,204,163,0.022);text-transform:uppercase;pointer-events:none;user-select:none;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;will-change:transform}
+.scan{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);opacity:.3;animation:scanD 7s linear 6s infinite;pointer-events:none}
+@keyframes scanD{0%{top:0;opacity:.3}85%{opacity:.08}100%{top:100%;opacity:0}}
+.hey{font-size:.58rem;font-weight:500;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;opacity:0;animation:fu .8s ease 6.2s forwards;font-family:'Space Mono',monospace}
+.hname{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,12vw,10.5rem);font-weight:300;line-height:.88;color:var(--text);opacity:0;animation:hni 1.2s cubic-bezier(0.76,0,0.18,1) 6.4s forwards}
+.hname em{font-style:italic;color:var(--gold-light);position:relative}
+.hname em::after{content:'';position:absolute;bottom:2px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-light),transparent);transform:scaleX(0);animation:lr 1s ease 7.7s forwards;transform-origin:left}
+@keyframes hni{from{opacity:0;transform:translateY(44px) skewY(2.5deg)}to{opacity:1;transform:none}}
+@keyframes lr{to{transform:scaleX(1)}}
+.htit{margin-top:1.9rem;font-size:.65rem;font-weight:400;letter-spacing:.36em;text-transform:uppercase;color:var(--muted);opacity:0;animation:fu .8s ease 7s forwards}
+.htit span{color:var(--teal)}
+.hcta{margin-top:2.8rem;display:inline-flex;align-items:center;gap:.55rem;font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(78,204,163,.28);padding:.82rem 2.2rem;text-decoration:none;opacity:0;animation:fu .8s ease 7.5s forwards;position:relative;overflow:hidden;transition:color .35s,border-color .35s}
+.hcta::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--teal),var(--gold));transform:translateX(-101%) skewX(-12deg);transition:transform .5s cubic-bezier(0.76,0,0.24,1);z-index:0}
+.hcta span{position:relative;z-index:1;transition:color .35s}
+.hcta:hover{border-color:transparent}
+.hcta:hover::before{transform:translateX(0) skewX(0)}
+.hcta:hover span{color:var(--bg)}
+.shint{margin-top:3rem;font-size:.49rem;letter-spacing:.33em;text-transform:uppercase;color:rgba(255,255,255,0.18);opacity:0;animation:fu .8s ease 7.9s forwards}
+ 
+/* SHARED */
+.div{width:54px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 2.5rem}
+.divt{width:54px;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);margin:0 auto 2.5rem;box-shadow:0 0 8px rgba(78,204,163,.5)}
+section{padding:7.5rem 4vw;position:relative}
+.sl{font-size:.53rem;font-weight:600;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;text-align:center;font-family:'Space Mono',monospace}
+.st{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5vw,4.8rem);font-weight:300;line-height:1.05;margin-bottom:1.5rem;text-align:center}
+.st em{font-style:italic;color:var(--gold-light)}
+.st .t{color:var(--teal)}
+ 
+/* REVEAL CLASSES */
+.rv{opacity:0;transform:translateY(38px);transition:opacity .9s cubic-bezier(0.16,1,0.3,1),transform .9s cubic-bezier(0.16,1,0.3,1)}
+.rvl{opacity:0;transform:translateX(-38px);transition:opacity .9s cubic-bezier(0.16,1,0.3,1),transform .9s cubic-bezier(0.16,1,0.3,1)}
+.rvs{opacity:0;transform:scale(.88);transition:opacity .8s cubic-bezier(0.16,1,0.3,1),transform .8s cubic-bezier(0.16,1,0.3,1)}
+.rv.vis,.rvl.vis,.rvs.vis{opacity:1;transform:none}
+ 
+/* SEPARATOR */
+.sep{width:100%;overflow:hidden;height:1px}
+.sepi{height:100%;background:linear-gradient(90deg,transparent,rgba(78,204,163,.35),var(--gold),rgba(78,204,163,.35),transparent);animation:ss 4s ease-in-out infinite}
+@keyframes ss{0%,100%{transform:scaleX(.6);opacity:.35}50%{transform:scaleX(1);opacity:1}}
+ 
+/* ABOUT */
+#about{max-width:1180px;margin:0 auto}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:5.5rem;align-items:start;margin-top:4rem}
+.atext p{font-size:.9rem;line-height:2;color:var(--muted);margin-bottom:1.1rem}
+.atext p strong{color:var(--gold-light);font-weight:500}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.sc{border:1px solid rgba(201,168,76,.14);padding:1.5rem;background:rgba(4,4,4,.85);position:relative;overflow:hidden;cursor:none;transition:border-color .4s,box-shadow .4s;transform-style:preserve-3d}
+.sc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(78,204,163,.07),rgba(201,168,76,.03));opacity:0;transition:opacity .4s}
+.sc:hover{border-color:rgba(78,204,163,.45);box-shadow:0 20px 55px rgba(0,0,0,.5),0 0 25px rgba(78,204,163,.07)}
+.sc:hover::before{opacity:1}
+.sn{font-family:'Cormorant Garamond',serif;font-size:2.9rem;font-weight:300;color:var(--teal);line-height:1;text-shadow:0 0 28px rgba(78,204,163,.3)}
+.sk{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
+@media(max-width:780px){.agrid{grid-template-columns:1fr;gap:3rem}}
+ 
+/* EXPERIENCE */
+#experience{background:rgba(255,255,255,.004)}
+.ei{max-width:1180px;margin:0 auto}
+.elist{margin-top:4rem}
+.eitem{display:grid;grid-template-columns:200px 1fr;gap:2.8rem;padding:2.8rem 0;border-bottom:1px solid rgba(201,168,76,.07);opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(0.16,1,0.3,1),transform .8s cubic-bezier(0.16,1,0.3,1);position:relative}
+.eitem::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,rgba(78,204,163,.035),transparent);transition:width .5s ease}
+.eitem:hover::before{width:100%}
+.eitem.vis{opacity:1;transform:none}
+.edate{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);padding-top:.3rem;font-family:'Space Mono',monospace}
+.erole{font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin-bottom:.3rem;transition:color .3s}
+.eitem:hover .erole{color:var(--teal)}
+.eorg{font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-light);margin-bottom:.9rem}
+.edesc{font-size:.84rem;line-height:1.92;color:var(--muted)}
+.etags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.9rem}
+.tag{font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(201,168,76,.18);color:var(--muted);padding:.22rem .6rem;transition:all .3s;cursor:none}
+.tag:hover{border-color:var(--teal);color:var(--teal);background:rgba(78,204,163,.04);transform:translateY(-2px)}
+@media(max-width:780px){.eitem{grid-template-columns:1fr;gap:.4rem}}
+ 
+/* PROJECTS */
+#projects{max-width:1180px;margin:0 auto}
+.pcard{margin-top:3.5rem;border:1px solid rgba(201,168,76,.13);background:rgba(6,6,6,.65);position:relative;overflow:hidden;opacity:0;transform:translateY(42px) perspective(1100px) rotateX(7deg);transition:opacity 1s cubic-bezier(0.16,1,0.3,1),transform 1s cubic-bezier(0.16,1,0.3,1),border-color .4s,box-shadow .4s;transform-style:preserve-3d}
+.pcard.vis{opacity:1;transform:translateY(0) perspective(1100px) rotateX(0)}
+.pcard:hover{border-color:rgba(78,204,163,.38);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 40px rgba(78,204,163,.04),inset 0 0 60px rgba(78,204,163,.015)}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),var(--gold-light),var(--teal),transparent);animation:tpl 3.5s ease infinite}
+@keyframes tpl{0%,100%{opacity:.45}50%{opacity:1}}
+.pcard::after{content:'';position:absolute;inset:0;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(78,204,163,.04),transparent 55%);opacity:0;transition:opacity .4s;pointer-events:none}
+.pcard:hover::after{opacity:1}
+.ptop{display:grid;grid-template-columns:1fr auto;align-items:start;gap:2rem;padding:2.8rem 2.8rem 2rem;border-bottom:1px solid rgba(201,168,76,.07)}
+.pbadge{display:inline-block;font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(78,204,163,.22);padding:.2rem .65rem;margin-bottom:.9rem;font-family:'Space Mono',monospace}
+.pname{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,4rem);font-weight:300;line-height:1.05}
+.pname em{font-style:italic;color:var(--gold-light)}
+.ptagline{font-size:.85rem;line-height:1.88;color:var(--muted);margin-top:.9rem;max-width:580px}
+.plbtn{display:inline-flex;align-items:center;gap:.5rem;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(78,204,163,.26);padding:.7rem 1.4rem;text-decoration:none;transition:border-color .35s;white-space:nowrap;align-self:flex-start;margin-top:.4rem;position:relative;overflow:hidden}
+.plbtn::before{content:'';position:absolute;inset:0;background:var(--teal);transform:translateX(-101%);transition:transform .4s cubic-bezier(0.76,0,0.24,1);z-index:0}
+.plbtn span{position:relative;z-index:1;transition:color .35s}
+.plbtn:hover{border-color:var(--teal)}
+.plbtn:hover::before{transform:translateX(0)}
+.plbtn:hover span{color:var(--bg)}
+.pbody{padding:2.2rem 2.8rem 2.8rem;display:grid;grid-template-columns:1fr 1fr;gap:2.8rem}
+.psh{font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;font-family:'Space Mono',monospace}
+.pdesc{font-size:.85rem;line-height:1.95;color:var(--muted)}
+.pdesc p{margin-bottom:.75rem}
+.psteps{list-style:none;margin-top:.4rem}
+.psteps li{display:flex;gap:.9rem;align-items:flex-start;font-size:.84rem;line-height:1.85;color:var(--muted);padding:.55rem 0;border-bottom:1px solid rgba(201,168,76,.05);transition:color .3s}
+.psteps li:hover{color:var(--text)}
+.psteps li:last-child{border:none}
+.snum{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--teal);line-height:1;min-width:26px}
+.specgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.4rem}
+.specitem{border:1px solid rgba(201,168,76,.1);padding:.85rem .95rem;transition:border-color .3s,background .3s;position:relative;overflow:hidden}
+.specitem::before{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:rgba(78,204,163,.04);transition:height .3s}
+.specitem:hover{border-color:rgba(78,204,163,.32)}
+.specitem:hover::before{height:100%}
+.speck{font-size:.52rem;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin-bottom:.28rem;font-family:'Space Mono',monospace}
+.specv{font-size:.82rem;color:var(--text)}
+.pvis{grid-column:1/-1;margin-top:.8rem;border:1px solid rgba(78,204,163,.13);padding:1.7rem 1.9rem;background:rgba(78,204,163,.018);display:flex;align-items:flex-start;gap:1.4rem}
+.pvis-t{font-size:.84rem;line-height:1.9;color:var(--muted)}
+.pvis-t strong{color:var(--teal);font-weight:500}
+@media(max-width:780px){.ptop,.pbody{padding:2rem 1.5rem}.ptop{grid-template-columns:1fr}.pbody{grid-template-columns:1fr}.pvis{grid-column:1}}
+ 
+/* CERTIFICATIONS */
+#certifications{background:rgba(255,255,255,.004)}
+.cin{max-width:1180px;margin:0 auto}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:1.1rem;margin-top:4rem}
+.ccard{border:1px solid rgba(201,168,76,.09);padding:1.4rem 1.3rem 1.15rem;background:rgba(8,8,8,.82);position:relative;overflow:hidden;opacity:0;transform:translateY(18px) scale(.97);transition:opacity .6s cubic-bezier(0.16,1,0.3,1),transform .6s cubic-bezier(0.16,1,0.3,1),border-color .3s,box-shadow .3s}
+.ccard.vis{opacity:1;transform:none}
+.ccard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent);opacity:0;transition:opacity .3s}
+.ccard:hover{border-color:rgba(78,204,163,.38);box-shadow:0 22px 48px rgba(0,0,0,.5),0 0 18px rgba(78,204,163,.07)}
+.ccard:hover::before{opacity:1}
+.ciss{font-size:.53rem;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;font-family:'Space Mono',monospace}
+.cname{font-family:'Cormorant Garamond',serif;font-size:1.07rem;color:var(--text);line-height:1.35;margin-bottom:.4rem}
+.cdate{font-size:.55rem;color:var(--muted);font-family:'Space Mono',monospace}
+.cskills{display:flex;flex-wrap:wrap;gap:.28rem;margin-top:.7rem}
+.csk{font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(78,204,163,.07);color:var(--teal);padding:.15rem .44rem;border-radius:2px;border:1px solid rgba(78,204,163,.14)}
+ 
+/* SKILLS */
+#skills{max-width:1180px;margin:0 auto}
+.skillgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(186px,1fr));gap:.8rem;margin-top:4rem}
+.spill{display:flex;align-items:center;gap:.7rem;border:1px solid rgba(201,168,76,.09);padding:.85rem 1rem;font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);opacity:0;transform:scale(.93);transition:opacity .5s cubic-bezier(0.16,1,0.3,1),transform .5s cubic-bezier(0.16,1,0.3,1),color .3s,border-color .3s,box-shadow .3s;cursor:none;position:relative;overflow:hidden}
+.spill::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(78,204,163,.05),transparent);opacity:0;transition:opacity .3s}
+.spill.vis{opacity:1;transform:scale(1)}
+.spill:hover{color:var(--teal);border-color:rgba(78,204,163,.45);box-shadow:0 0 18px rgba(78,204,163,.09),inset 0 0 18px rgba(78,204,163,.025);transform:scale(1.045)!important}
+.spill:hover::before{opacity:1}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0;box-shadow:0 0 8px var(--teal);transition:transform .3s}
+.spill:hover .sdot{transform:scale(1.7)}
+ 
+/* EDUCATION */
+#education{background:rgba(255,255,255,.004)}
+.edin{max-width:1180px;margin:0 auto}
+.edlist{margin-top:4rem}
+.editem{display:flex;align-items:flex-start;gap:2.4rem;padding:1.9rem 0;border-bottom:1px solid rgba(201,168,76,.06);opacity:0;transform:translateX(-20px);transition:opacity .7s cubic-bezier(0.16,1,0.3,1),transform .7s cubic-bezier(0.16,1,0.3,1)}
+.editem.vis{opacity:1;transform:none}
+.eyr{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--gold);min-width:130px}
+.ednm{font-size:.92rem;color:var(--text);font-weight:500}
+.edsb{font-size:.7rem;color:var(--muted);margin-top:.2rem}
+.lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:4rem}
+.lcard{text-align:center;border:1px solid rgba(201,168,76,.1);padding:2rem 1rem;transition:all .4s cubic-bezier(0.16,1,0.3,1);position:relative;overflow:hidden}
+.lcard::before{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:rgba(78,204,163,.04);transition:height .4s}
+.lcard:hover{border-color:var(--teal);transform:translateY(-6px);box-shadow:0 18px 38px rgba(0,0,0,.38)}
+.lcard:hover::before{height:100%}
+.lname{font-family:'Cormorant Garamond',serif;font-size:1.5rem}
+.llvl{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-top:.45rem;font-family:'Space Mono',monospace}
+@media(max-width:780px){.lgrid{grid-template-columns:1fr 1fr}}
+ 
+/* CONTACT */
+#contact{text-align:center}
+.ctin{max-width:580px;margin:0 auto}
+.ctlinks{display:flex;justify-content:center;gap:1.2rem;margin-top:3rem;flex-wrap:wrap}
+.ctlink{font-size:.57rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);text-decoration:none;border:1px solid rgba(201,168,76,.2);padding:.82rem 1.8rem;transition:all .4s cubic-bezier(0.16,1,0.3,1);position:relative;overflow:hidden}
+.ctlink::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(78,204,163,.09),rgba(201,168,76,.07));transform:scaleX(0);transform-origin:right;transition:transform .4s cubic-bezier(0.76,0,0.24,1)}
+.ctlink:hover{color:var(--teal);border-color:rgba(78,204,163,.45);box-shadow:0 0 28px rgba(78,204,163,.13),0 8px 28px rgba(0,0,0,.38);transform:translateY(-3px)}
+.ctlink:hover::before{transform:scaleX(1);transform-origin:left}
+ 
+footer{text-align:center;padding:3rem;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,168,76,.2);border-top:1px solid rgba(201,168,76,.055);font-family:'Space Mono',monospace}
 </style>
 </head>
 <body>
-
-<!-- Page Loader -->
-<div class="page-loader">
-  <div class="loader-text">DESAI</div>
-  <div class="loader-bar"></div>
+ 
+<div id="prog"></div>
+<div id="noise"></div>
+<div id="cur"></div>
+<div id="cring"></div>
+<div id="pt"></div>
+<div id="ee">// 17 · builder · dubai</div>
+ 
+<div id="km">
+  <h2>🎮 You Found It.</h2>
+  <p>Not many people look this closely. That's exactly the kind of attention to detail that built Dezai AI, Hydrythm, and everything else. Keep looking deeper — that's where the magic lives.</p>
+  <p class="code">↑ ↑ ↓ ↓ ← → ← → B A</p>
+  <button id="kmc" onclick="document.getElementById('km').classList.remove('show')">Close ↗</button>
 </div>
-
-<!-- Cursor -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-<div id="cursor-mask"></div>
-
-<!-- Nav -->
+ 
+<div id="loader">
+  <canvas id="lc"></canvas>
+  <div class="lcon">
+    <div class="lgw" data-text="DESAI">DESAI</div>
+    <p class="lsub">Dhairya Desai &nbsp;·&nbsp; Portfolio 2026</p>
+    <div class="lbw"><div class="lbf"></div></div>
+  </div>
+</div>
+ 
+<canvas id="bgc"></canvas>
+<canvas id="tc"></canvas>
+ 
 <nav>
-  <div class="nav-logo">Desai</div>
-  <ul class="nav-links">
-    <li><a href="#profile">Profile</a></li>
-    <li><a href="#timeline">Timeline</a></li>
-    <li><a href="#phases">Phases</a></li>
-    <li><a href="#wealth">Wealth</a></li>
-    <li><a href="#rules">Rules</a></li>
+  <a class="nl" href="#hero">
+    <img class="nlimg" src="dezai ai logo.png" alt="D" onerror="this.style.display='none'">
+    <span class="nlt">Dhairya</span>
+  </a>
+  <button class="ntog" id="ntog"><span></span><span></span><span></span></button>
+  <ul id="nlinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
-
-<!-- HERO -->
+ 
+<main>
+ 
 <section id="hero">
-  <div class="hero-bg-text">LEGACY</div>
-  <p class="hero-eyebrow">The Master Plan · Final Optimised Version · Age 17 → Legacy</p>
-  <h1 class="hero-title">The<br><em>Desai</em><br>Master Plan</h1>
-  <p class="hero-subtitle">Australia–UAE Pipeline · AI-First Executive Track · Age 17 to Legacy</p>
-  <div class="hero-line">DHAIRYA DESAI · JULY 2026 · DEZAI AI</div>
-  <div class="hero-scroll-indicator">
-    <div class="scroll-line"></div>
-    <span class="scroll-text">Scroll</span>
+  <div class="hbgt">DHAIRYA</div>
+  <div class="scan"></div>
+  <p class="hey">Dubai, UAE &nbsp;·&nbsp; Founder &nbsp;·&nbsp; Innovator &nbsp;·&nbsp; Age 17</p>
+  <h1 class="hname">Dhairya<br><em>Desai</em></h1>
+  <p class="htit">Founder, <span>Dezai AI</span> &nbsp;·&nbsp; GEMS New Millennium School</p>
+  <a class="hcta" href="#about"><span>Explore Portfolio ↓</span></a>
+  <p class="shint">Move your mouse &nbsp;·&nbsp; scroll to explore</p>
+</section>
+ 
+<div class="sep"><div class="sepi"></div></div>
+ 
+<section id="about">
+  <p class="sl rv">01 &nbsp;·&nbsp; Introduction</p>
+  <div class="div rv"></div>
+  <h2 class="st rv">The <em>Architect</em><br>Behind the Vision</h2>
+  <div class="agrid">
+    <div class="atext rvl">
+      <p>My name is Dhairya, and I am currently a senior student at <strong>GEMS New Millennium School</strong>, studying Physics, Biology, and Chemistry. Passionate about <strong>leadership, digital innovation</strong>, and creating opportunities for students who wish to grow.</p>
+      <p>I started as a young teenager inspired by content creators, growing my YouTube channel to over <strong>420,000 total views</strong> through self-taught video and audio editing. During COVID-19, I taught myself music production and web development — laying the foundation for everything that followed.</p>
+      <p>This drive led me to develop <strong>Dezai AI</strong> — a free study aid and career guide integrating multiple AI models, removing paywalls and sign-in barriers. Actively used across <strong>India and Dubai</strong>.</p>
+      <p>My experiences as <strong>Class Prefect</strong>, 10+ MUN conferences, Round Square events, theatre festivals, and an aviation internship shaped me into a builder who leads with purpose.</p>
+    </div>
+    <div class="sgrid">
+      <div class="sc rvs" style="transition-delay:.08s"><div class="sn">420K+</div><div class="sk">YouTube Views</div></div>
+      <div class="sc rvs" style="transition-delay:.16s"><div class="sn">10+</div><div class="sk">MUN Conferences</div></div>
+      <div class="sc rvs" style="transition-delay:.24s"><div class="sn">2</div><div class="sk">Countries Active</div></div>
+      <div class="sc rvs" style="transition-delay:.32s"><div class="sn">17</div><div class="sk">Years Old. Building.</div></div>
+    </div>
   </div>
 </section>
-
-<!-- PROFILE -->
-<section id="profile">
-  <div class="profile-image-side">
-    <img class="profile-img" src="me.jpg" alt="Dhairya Desai" />
-  </div>
-  <div class="profile-content-side">
-    <p class="profile-tag">The Architect</p>
-    <h2 class="profile-name">Dhairya<br><span>Desai</span></h2>
-    <p class="profile-age">AGE 17 · DUBAI, UAE · TURNING 18 JULY 2026</p>
-    <p class="profile-bio">"Thinking at 40 while living at 17."<br>Founder. Strategist. Future Group CIO.</p>
-    <div class="profile-stats">
-      <div class="stat-item">
-        <div class="stat-num">17</div>
-        <div class="stat-label">Years Old</div>
+ 
+<div class="sep"><div class="sepi"></div></div>
+ 
+<section id="experience">
+  <div class="ei">
+    <p class="sl rv">02 &nbsp;·&nbsp; Experience</p>
+    <div class="div rv"></div>
+    <h2 class="st rv">The <em>Journey</em><br>So Far</h2>
+    <div class="elist">
+      <div class="eitem">
+        <div class="edate">Jan 2026 – Present<br>Remote · Dubai, UAE</div>
+        <div>
+          <div class="erole">Founder &amp; Lead Architect</div>
+          <div class="eorg">Dezai AI — Self-employed</div>
+          <p class="edesc">Built Dezai AI to change how students study — a platform using AI to cut through the noise, completely free without sign-in barriers. Integrated multiple AI APIs, designed the full web UI in JavaScript and CSS, prioritised security, and opened internship programmes issuing certificates and letters of recommendation.</p>
+          <div class="etags"><span class="tag">Artificial Intelligence</span><span class="tag">Product Management</span><span class="tag">Prompt Engineering</span><span class="tag">JavaScript</span><span class="tag">CSS</span></div>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">40</div>
-        <div class="stat-label">Age at Launch</div>
+      <div class="eitem">
+        <div class="edate">Sep 2024 · Dubai, UAE</div>
+        <div>
+          <div class="erole">Class Prefect</div>
+          <div class="eorg">GEMS New Millennium School</div>
+          <p class="edesc">Represented my class, maintained discipline, and supported teachers. Strengthened leadership and interpersonal skills through communication between staff and students.</p>
+          <div class="etags"><span class="tag">Leadership</span><span class="tag">Communication</span></div>
+        </div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">500M+</div>
-        <div class="stat-label">AED Net Worth @ 57</div>
+      <div class="eitem">
+        <div class="edate">2023 · Dubai, UAE</div>
+        <div>
+          <div class="erole">Aviation Technician</div>
+          <div class="eorg">Sarsan Aviation Academy — Internship</div>
+          <p class="edesc">Worked alongside skilled professionals on modern electrical system modifications to aircraft systems for enhanced performance. Gained strong grounding in aviation mechanics, precision engineering, and collaboration in a high-stakes setting.</p>
+          <div class="etags"><span class="tag">Precision Engineering</span><span class="tag">Aviation</span><span class="tag">Teamwork</span></div>
+        </div>
       </div>
     </div>
-    <div class="profile-tags">
-      <div class="ptag">DezaiAI Founder</div>
-      <div class="ptag">GEMS Education</div>
-      <div class="ptag">UOWD → UOW → Melbourne</div>
-      <div class="ptag">Gujarati Heritage</div>
-      <div class="ptag">UAE Raised</div>
-      <div class="ptag">Globally Minded</div>
+  </div>
+</section>
+ 
+<div class="sep"><div class="sepi"></div></div>
+ 
+<section id="projects">
+  <p class="sl rv">03 &nbsp;·&nbsp; Projects</p>
+  <div class="divt rv"></div>
+  <h2 class="st rv">Built from<br><em>Frustration &amp; Vision</em></h2>
+ 
+  <div class="pcard">
+    <div class="ptop">
+      <div>
+        <div class="pbadge">Conceptual · Open Source · DIY</div>
+        <div class="pname">Hyd<em>rythm</em></div>
+        <p class="ptagline">A wearable air purification helmet that uses only water — no disposable filters ever — to create a personal clean-air bubble in polluted environments. Clean air shouldn't be a luxury.</p>
+      </div>
+      <a class="plbtn" href="https://d3zaii.github.io/hydrythm/" target="_blank"><span>Visit Project ↗</span></a>
+    </div>
+    <div class="pbody">
+      <div>
+        <p class="psh">How It Works — 4 Stage Process</p>
+        <ol class="psteps">
+          <li><span class="snum">1</span><span>Polluted air enters through side intake grills with a coarse pre-filter mesh — the first barrier against large particles.</span></li>
+          <li><span class="snum">2</span><span>Two small centrifugal micro-blowers (adjustable speed, 20–40 L/min) pull air inside at controlled rates.</span></li>
+          <li><span class="snum">3</span><span>Air passes through a transparent water cartridge (30–50 ml). PM2.5, PM10, dust, pollen and gases get trapped. You can literally see pollution collecting in the water.</span></li>
+          <li><span class="snum">4</span><span>Clean air delivers directly into a sealed zone around your face. Excess air vents safely downward.</span></li>
+        </ol>
+        <p class="psh" style="margin-top:1.8rem">What Makes It Different</p>
+        <div class="pdesc">
+          <p>Fully open-source — complete materials list, 3D-print files (PETG/TPU), and assembly instructions. No filter replacements. Ever. Just rinse and refill.</p>
+          <p>Optional V2 adds a PM2.5 sensor with real-time AQI display. Designed in Dubai with Delhi-level AQI in mind — for everyone, not just those who can afford it.</p>
+        </div>
+      </div>
+      <div>
+        <p class="psh">Key Specifications</p>
+        <div class="specgrid">
+          <div class="specitem"><div class="speck">Weight</div><div class="specv">380–480 g</div></div>
+          <div class="specitem"><div class="speck">Battery</div><div class="specv">5–8 hrs (USB-C)</div></div>
+          <div class="specitem"><div class="speck">Noise</div><div class="specv">&lt; 65 dB</div></div>
+          <div class="specitem"><div class="speck">PM2.5 Removal</div><div class="specv">70–85%</div></div>
+          <div class="specitem"><div class="speck">Water Cartridge</div><div class="specv">30–50 ml</div></div>
+          <div class="specitem"><div class="speck">Build Cost</div><div class="specv">~$30–55</div></div>
+          <div class="specitem"><div class="speck">Target Retail</div><div class="specv">$40–70</div></div>
+          <div class="specitem"><div class="speck">Maintenance</div><div class="specv">Rinse &amp; Refill</div></div>
+        </div>
+      </div>
+      <div class="pvis">
+        <div style="font-size:1.8rem;flex-shrink:0">🌬️</div>
+        <div class="pvis-t"><strong>The Vision:</strong> Born from frustration with bad air quality, Hydrythm is designed to be an affordable, accessible solution for everyone. Roadmap: DIY prototype → mass production at <strong>$40–70</strong>. No replacement filters. No ongoing costs. Just water.</div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="pcard">
+    <div class="ptop">
+      <div>
+        <div class="pbadge">Live · Active Users · Free</div>
+        <div class="pname">Dezai <em>AI</em></div>
+        <p class="ptagline">A free AI-powered study tool and career guide for students — no logins, no paywalls, no friction. Multi-model AI integration for accurate, instant guidance.</p>
+      </div>
+      <a class="plbtn" href="https://dezaiai.created.app" target="_blank"><span>Visit Project ↗</span></a>
+    </div>
+    <div class="pbody" style="grid-template-columns:1fr">
+      <div class="pdesc">
+        <p>Dezai AI integrates multiple prominent AI models to refine outputs and lower inaccuracy. All core features remain free — removing the sign-in barriers that frustrate students on other platforms.</p>
+        <p>Built with JavaScript and CSS using an AI-augmented workflow. Currently active across India and Dubai with interns helping scale it further into classrooms.</p>
+      </div>
     </div>
   </div>
 </section>
-
-<div class="section-separator"></div>
-
-<!-- TIMELINE -->
-<section id="timeline">
-  <div class="section-header">
-    <span class="section-num">01</span>
-    <h2 class="section-title">The Complete <em>Timeline</em></h2>
-  </div>
-  <div class="timeline-grid" id="timeline-grid">
-    <!-- items injected by JS -->
-  </div>
-</section>
-
-<div class="section-separator"></div>
-
-<!-- PHASES -->
-<section id="phases">
-  <div class="section-header">
-    <span class="section-num">02</span>
-    <h2 class="section-title">Six <em>Phases</em></h2>
-  </div>
-  <div class="phases-grid">
-    <div class="phase-card">
-      <div class="phase-num">0</div>
-      <div class="phase-ages">Age 17–18 · Dubai</div>
-      <div class="phase-title">Before The Journey</div>
-      <p class="phase-desc">Arrive at UOWD as a founder, not just a student. Scale DezaiAI, complete Cisco NetAcad, build the personal brand.</p>
-    </div>
-    <div class="phase-card">
-      <div class="phase-num">1</div>
-      <div class="phase-ages">Age 18–25 · Dubai → NSW → Melbourne</div>
-      <div class="phase-title">The Foundation</div>
-      <p class="phase-desc">BSc CS, Big 4 bridge years, 85 PR points, permanent residency granted. AED 0 Masters tuition via HECS.</p>
-    </div>
-    <div class="phase-card">
-      <div class="phase-num">2</div>
-      <div class="phase-ages">Age 27–30 · Melbourne</div>
-      <div class="phase-title">The Deloitte Years</div>
-      <p class="phase-desc">Collect weapons. Australian citizenship. Lead AUD 2M+ project. CISM, AIGP, SAFe. The MBA story builds here.</p>
-    </div>
-    <div class="phase-card">
-      <div class="phase-num">3</div>
-      <div class="phase-ages">Age 30–32 · UAE</div>
-      <div class="phase-title">The MBA Bridge</div>
-      <p class="phase-desc">INSEAD Abu Dhabi. The pivot from Western credibility to GCC power. Cohort = future CEOs and sovereign wealth MDs.</p>
-    </div>
-    <div class="phase-card">
-      <div class="phase-num">4</div>
-      <div class="phase-ages">Age 31–40 · UAE</div>
-      <div class="phase-title">The UAE Acceleration</div>
-      <p class="phase-desc">Zero tax. Maximum velocity. First AED millionaire at 31–32. Golden Visa. Director → VP Technology → Group CIO.</p>
-    </div>
-    <div class="phase-card">
-      <div class="phase-num">5</div>
-      <div class="phase-ages">Age 40+ · UAE & Beyond</div>
-      <div class="phase-title">Desai Launch + Legacy</div>
-      <p class="phase-desc">World's first AI-native luxury automotive atelier. Group CIO. Desai Foundation. Gujarat pediatric hospital. Immortality.</p>
+ 
+<div class="sep"><div class="sepi"></div></div>
+ 
+<section id="certifications">
+  <div class="cin">
+    <p class="sl rv">04 &nbsp;·&nbsp; Certifications</p>
+    <div class="div rv"></div>
+    <h2 class="st rv">Credentials &amp;<br><em>Recognition</em></h2>
+    <div class="cgrid">
+      <div class="ccard"><div class="ciss">Cisco</div><div class="cname">Introduction to Data Science</div><div class="cdate">Issued Apr 2026</div><div class="cskills"><span class="csk">Data Science</span></div></div>
+      <div class="ccard"><div class="ciss">Mastercard × Forage</div><div class="cname">Cybersecurity Job Simulation</div><div class="cdate">Issued Mar 2026</div><div class="cskills"><span class="csk">Cybersecurity</span></div></div>
+      <div class="ccard"><div class="ciss">Deloitte × Forage</div><div class="cname">Cyber Job Simulation — Australia</div><div class="cdate">Issued Mar 2026</div><div class="cskills"><span class="csk">Cybersecurity</span></div></div>
+      <div class="ccard"><div class="ciss">Tata Group × Forage</div><div class="cname">Cybersecurity Analyst Job Simulation</div><div class="cdate">Issued Mar 2026</div><div class="cskills"><span class="csk">Cybersecurity</span><span class="csk">Analysis</span></div></div>
+      <div class="ccard"><div class="ciss">PwC × Forage</div><div class="cname">Cyber Security Consulting Job Simulation</div><div class="cdate">Issued Mar 2026</div><div class="cskills"><span class="csk">Cybersecurity</span><span class="csk">Consulting</span></div></div>
+      <div class="ccard"><div class="ciss">HP LIFE</div><div class="cname">Data Science &amp; Analytics</div><div class="cdate">Issued Mar 2026</div><div class="cskills"><span class="csk">Data Analysis</span></div></div>
+      <div class="ccard"><div class="ciss">HP LIFE</div><div class="cname">AI for Business Professionals</div><div class="cdate">Issued Mar 2026</div><div class="cskills"><span class="csk">AI</span><span class="csk">Business Strategy</span></div></div>
+      <div class="ccard"><div class="ciss">HP LIFE</div><div class="cname">Introduction to Cybersecurity Awareness</div><div class="cdate">Issued Mar 2026</div><div class="cskills"><span class="csk">Cybersecurity</span></div></div>
+      <div class="ccard"><div class="ciss">Alison</div><div class="cname">Computer Networking — Digital Network Security</div><div class="cdate">Issued Jan 2026</div><div class="cskills"><span class="csk">Network Security</span></div></div>
+      <div class="ccard"><div class="ciss">Highfield</div><div class="cname">Level 3 Emergency First Aid &amp; AED with CPR</div><div class="cdate">Issued Sep 2025 · Expires Sep 2028</div><div class="cskills"><span class="csk">CPR</span><span class="csk">First Aid</span></div></div>
+      <div class="ccard"><div class="ciss">United Nations</div><div class="cname">Net Zero 101 — Online Course</div><div class="cdate">Issued Sep 2025</div><div class="cskills"><span class="csk">Sustainability</span><span class="csk">Climate</span></div></div>
+      <div class="ccard"><div class="ciss">Medefine Education</div><div class="cname">5th Annual UAE Aspiring Medics &amp; Scientists Conference</div><div class="cdate">Issued Mar 2025</div><div class="cskills"><span class="csk">Healthcare</span><span class="csk">Innovation</span></div></div>
+      <div class="ccard"><div class="ciss">GEMS New Millennium School</div><div class="cname">Certification of Merit — IHMUN Runner Up</div><div class="cdate">Issued Jan 2024</div><div class="cskills"><span class="csk">Debate</span><span class="csk">MUN</span></div></div>
+      <div class="ccard"><div class="ciss">GEMS New Millennium School</div><div class="cname">LitGalore Shakespeare Theatre Festival — Second Runner Up</div><div class="cdate">Issued Mar 2023</div><div class="cskills"><span class="csk">Acting</span><span class="csk">Performance</span></div></div>
+      <div class="ccard"><div class="ciss">Cisco Netacad</div><div class="cname">Computer Networking Certification</div><div class="cdate">Projected 2026</div><div class="cskills"><span class="csk">Networking</span></div></div>
     </div>
   </div>
 </section>
-
-<!-- DOCUMENT STACK -->
-<section id="documents">
-  <div class="section-header">
-    <span class="section-num">03</span>
-    <h2 class="section-title">The Document <em>Stack</em></h2>
+ 
+<div class="sep"><div class="sepi"></div></div>
+ 
+<section id="skills">
+  <p class="sl rv">05 &nbsp;·&nbsp; Skills</p>
+  <div class="divt rv"></div>
+  <h2 class="st rv">Technical &amp;<br><span class="t">Human</span> Capital</h2>
+  <div class="skillgrid">
+    <div class="spill"><span class="sdot"></span>Artificial Intelligence</div>
+    <div class="spill"><span class="sdot"></span>Prompt Engineering</div>
+    <div class="spill"><span class="sdot"></span>Product Management</div>
+    <div class="spill"><span class="sdot"></span>JavaScript</div>
+    <div class="spill"><span class="sdot"></span>CSS &amp; Web Dev</div>
+    <div class="spill"><span class="sdot"></span>Data Analysis</div>
+    <div class="spill"><span class="sdot"></span>Business Strategy</div>
+    <div class="spill"><span class="sdot"></span>Network Security</div>
+    <div class="spill"><span class="sdot"></span>Cybersecurity</div>
+    <div class="spill"><span class="sdot"></span>Public Speaking</div>
+    <div class="spill"><span class="sdot"></span>Leadership</div>
+    <div class="spill"><span class="sdot"></span>Event Organisation</div>
+    <div class="spill"><span class="sdot"></span>Networking</div>
+    <div class="spill"><span class="sdot"></span>Teamwork</div>
+    <div class="spill"><span class="sdot"></span>MUN (10+ Confs)</div>
+    <div class="spill"><span class="sdot"></span>Video &amp; Audio Editing</div>
   </div>
-  <div class="docs-grid">
-    <div class="doc-card">
-      <span class="doc-emoji">🇦🇺</span>
-      <div class="doc-title">Australian Passport</div>
-      <div class="doc-subtitle">Western Credibility · Global Mobility</div>
-      <p class="doc-desc">GCC premium access, top-ranked university system, citizenship rights. The foundation of your untouchability.</p>
-      <div class="doc-when">TARGET: Age 27–28</div>
+</section>
+ 
+<div class="sep"><div class="sepi"></div></div>
+ 
+<section id="education">
+  <div class="edin">
+    <p class="sl rv">06 &nbsp;·&nbsp; Education</p>
+    <div class="div rv"></div>
+    <h2 class="st rv"><em>Academic</em><br>Foundation</h2>
+    <div class="edlist">
+      <div class="editem"><div class="eyr">2014 – 2026</div><div><div class="ednm">GEMS New Millennium School</div><div class="edsb">Physics · Biology · Chemistry &nbsp;·&nbsp; Dubai, UAE</div></div></div>
+      <div class="editem"><div class="eyr">2012 – 2013</div><div><div class="ednm">D. R. Amin Memorial School</div><div class="edsb">Early Education</div></div></div>
     </div>
-    <div class="doc-card">
-      <span class="doc-emoji">🇮🇳</span>
-      <div class="doc-title">OCI Card</div>
-      <div class="doc-subtitle">Lifelong India Access · NRI Parity</div>
-      <p class="doc-desc">Gujarat Foundation operations, property rights, family connection. Cost: ~AED 1,360 once. Best value document you'll ever obtain.</p>
-      <div class="doc-when">TARGET: Age 27–28 · After Citizenship</div>
-    </div>
-    <div class="doc-card">
-      <span class="doc-emoji">🇦🇪</span>
-      <div class="doc-title">UAE Golden Visa (10yr)</div>
-      <div class="doc-subtitle">Employer-Independent UAE Residency</div>
-      <p class="doc-desc">Negotiating freedom, zero deportation risk. Australian Passport + UAE Golden Visa = Total Untouchability. No employer owns your residency.</p>
-      <div class="doc-when">TARGET: Age 31–32</div>
+    <div style="margin-top:4.5rem">
+      <p class="sl rv" style="text-align:left">Languages</p>
+      <div class="lgrid">
+        <div class="lcard rv" style="transition-delay:.05s"><div class="lname">English</div><div class="llvl">Native / Bilingual</div></div>
+        <div class="lcard rv" style="transition-delay:.1s"><div class="lname">Gujarati</div><div class="llvl">Native Language</div></div>
+        <div class="lcard rv" style="transition-delay:.15s"><div class="lname">Hindi</div><div class="llvl">Native Language</div></div>
+        <div class="lcard rv" style="transition-delay:.2s"><div class="lname">Arabic</div><div class="llvl">Limited Working</div></div>
+      </div>
     </div>
   </div>
 </section>
-
-<!-- WEALTH -->
-<section id="wealth">
-  <div class="section-header">
-    <span class="section-num">04</span>
-    <h2 class="section-title">Wealth <em>Trajectory</em></h2>
-  </div>
-  <div class="wealth-bars" id="wealth-bars">
-    <!-- injected by JS -->
-  </div>
-</section>
-
-<!-- RULES -->
-<section id="rules">
-  <div class="section-header">
-    <span class="section-num">05</span>
-    <h2 class="section-title">Non‑<em>Negotiables</em></h2>
-  </div>
-  <div class="rules-grid">
-    <div class="rules-column never">
-      <h3>Never</h3>
-      <div class="rule-item"><span class="rule-icon" style="color:#C94C4C">✕</span><span class="rule-text">Leave Australia before citizenship is secured (Age 27–28)</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:#C94C4C">✕</span><span class="rule-text">Skip the AUD 2M+ project at Deloitte — it is your MBA essay and your CIO credential</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:#C94C4C">✕</span><span class="rule-text">Choose a lesser MBA to save money or time</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:#C94C4C">✕</span><span class="rule-text">Touch the VOO investment principal — ever, under any circumstances</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:#C94C4C">✕</span><span class="rule-text">Let lifestyle inflation eat UAE salary — you are building an empire, not a lifestyle</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:#C94C4C">✕</span><span class="rule-text">Stop building personal brand</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:#C94C4C">✕</span><span class="rule-text">Move out of NSW before honouring 190 state commitment (Age 24–25)</span></div>
-    </div>
-    <div class="rules-column always">
-      <h3>Always</h3>
-      <div class="rule-item"><span class="rule-icon" style="color:var(--gold)">✓</span><span class="rule-text">Take the hardest project available</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:var(--gold)">✓</span><span class="rule-text">Build relationships before you need them</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:var(--gold)">✓</span><span class="rule-text">Scale VOO with every single salary increase</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:var(--gold)">✓</span><span class="rule-text">Remember the philosophy — borrowed time, purpose, lifting others</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:var(--gold)">✓</span><span class="rule-text">Protect the people you love alongside the plan</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:var(--gold)">✓</span><span class="rule-text">Lodge ACS assessment at Age 20 — not final semester</span></div>
-      <div class="rule-item"><span class="rule-icon" style="color:var(--gold)">✓</span><span class="rule-text">Start Gold (5g quarterly) from first paycheck in bridge years</span></div>
+ 
+<div class="sep"><div class="sepi"></div></div>
+ 
+<section id="contact">
+  <div class="ctin">
+    <p class="sl rv">07 &nbsp;·&nbsp; Contact</p>
+    <div class="divt rv"></div>
+    <h2 class="st rv">Let's <em>Connect</em></h2>
+    <p class="rv" style="font-size:.84rem;color:var(--muted);line-height:1.95;margin-top:1rem">Founder, builder, student. Always open to meaningful conversations about technology, innovation, and what's next.</p>
+    <div class="ctlinks">
+      <a class="ctlink rv" href="https://dezaiai.created.app" target="_blank" style="transition-delay:.05s">Dezai AI</a>
+      <a class="ctlink rv" href="https://d3zaii.github.io/hydrythm/" target="_blank" style="transition-delay:.1s">Hydrythm</a>
+      <a class="ctlink rv" href="https://instagram.com/dezai.ai" target="_blank" style="transition-delay:.15s">@dezai.ai</a>
     </div>
   </div>
 </section>
-
-<!-- QUOTE -->
-<section id="quote-section">
-  <div class="quote-bg">"</div>
-  <span class="quote-mark">"</span>
-  <p class="quote-text">We are born, we work, we live, we go — but in this little duration if we can contribute to whatever brought us here, that is the greatest deed you can ever perform.</p>
-  <p class="quote-attr">Dhairya Desai · Planning started Age 17 · Desai launches Age 40</p>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand">
-    DESAI
-    <span>Master Plan · Final Optimised Version</span>
-  </div>
-  <div class="footer-info">
-    DezaiAI: Live through Year 1<br>
-    Desai Automotive: Launches Age 40<br>
-    The only variable left is time.<br>
-    And you have plenty of it.
-  </div>
-</footer>
-
+ 
+</main>
+<footer>&copy; 2026 &nbsp;·&nbsp; Dhairya Desai &nbsp;·&nbsp; Founder, Dezai AI &nbsp;·&nbsp; Dubai, UAE</footer>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ── CURSOR ──
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-const mask = document.getElementById('cursor-mask');
-
-let mx = -200, my = -200, rx = -200, ry = -200;
-
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  dot.style.left = mx + 'px';
-  dot.style.top = my + 'px';
-  mask.style.setProperty('--mx', mx + 'px');
-  mask.style.setProperty('--my', my + 'px');
-});
-
-(function animRing() {
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  ring.style.left = rx + 'px';
-  ring.style.top = ry + 'px';
-  requestAnimationFrame(animRing);
-})();
-
-document.querySelectorAll('a, .phase-card, .doc-card, .ptag, .nav-links li').forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-});
-
-// ── TIMELINE DATA ──
-const timelineData = [
-  { age: '17–18', year: '2025–26', milestone: 'Phase 0: Before the Journey', detail: 'DezaiAI deployed in Dubai schools. Cisco NetAcad bundle. LinkedIn brand built.', worth: '' },
-  { age: '18–19', year: '2026–27', milestone: 'UOWD Year 1 — Dubai', detail: 'BSc Computer Science, ACS Accredited. GPA 3.5+. Build UAE network.', worth: '' },
-  { age: '19–21', year: '2027–29', milestone: 'UOW Wollongong Years 2–3', detail: 'Regional PR points accumulating. AWS cert. Vacation programme application.', worth: 'AED 50k–100k' },
-  { age: '20', year: '2028', milestone: '⚡ CRITICAL: ACS Skills Assessment', detail: 'Lodge Year 2, Sem 2. Do NOT wait for final semester. Result valid 3 years. Unlocks everything.', worth: '' },
-  { age: '21–23', year: '2029–31', milestone: 'Deloitte / Big 4 — Sydney', detail: 'Grad Analyst → Consultant. AUD 78k–95k. Accumulate PR points. Save aggressively.', worth: 'AED 150k–250k' },
-  { age: '23', year: '2031', milestone: 'Lodge NSW 190 PR — 85 Points', detail: 'Near-certain invite. ACS done at 20, ready to go. EOI via SkillSelect.', worth: '' },
-  { age: '24', year: '2032', milestone: '🏅 PR GRANTED', detail: 'Permanent Resident. Citizenship clock starts. Continue Deloitte Sydney.', worth: 'AED 490k–600k' },
-  { age: '25–27', year: '2033–35', milestone: 'MSc Information Systems — Melbourne', detail: 'AED 0 upfront tuition via full HECS. WAM 75+. 4 years Big 4 entering — strongest cohort profile.', worth: '' },
-  { age: '27–28', year: '2035–36', milestone: '🌏 Australian Citizenship Secured', detail: 'Never leave before this. Apply OCI card immediately. ~AED 1,360. Lifelong India access.', worth: 'AED 950k–1.2M' },
-  { age: '30–32', year: '2038–40', milestone: 'INSEAD Abu Dhabi MBA', detail: 'The MBA is not the degree. The MBA is the network. UAE Golden Visa. Enter GCC market.', worth: '' },
-  { age: '31–32', year: '2039–40', milestone: '🏆 First AED Millionaire', detail: 'Net worth crosses AED 1.5M. VOO compounding, UAE zero-tax salary, gold holdings.', worth: 'AED 1.5M' },
-  { age: '34–36', year: '2042–44', milestone: 'Director of Technology', detail: 'Full P&L ownership. Find the crisis nobody wants. Deliver it. This is your CIO credential.', worth: 'AED 3M–4M' },
-  { age: '40', year: '2048', milestone: '🚀 Desai Automotive Launches', detail: 'World\'s first AI-native luxury atelier. Group CIO. DezaiAI → Desai. Bikes first, cars follow.', worth: 'AED 12M–15M' },
-  { age: '55', year: '2063', milestone: '🏛 Legacy Complete', detail: 'Desai Foundation. Gujarat pediatric hospital. AED 370M–743M total assets.', worth: 'AED 370M–743M' },
-];
-
-const tgrid = document.getElementById('timeline-grid');
-timelineData.forEach((d, i) => {
-  tgrid.innerHTML += `
-    <div class="timeline-item" style="transition-delay:${i * 0.06}s">
-      <div class="timeline-age">${d.age}<small>${d.year}</small></div>
-      <div class="timeline-divider"></div>
-      <div class="timeline-content">
-        <div class="timeline-milestone">${d.milestone}</div>
-        <div class="timeline-detail">${d.detail}</div>
-        ${d.worth ? `<div class="timeline-networth">Net Worth → ${d.worth}</div>` : ''}
-      </div>
-    </div>`;
-});
-
-// ── WEALTH DATA ──
-const wealthData = [
-  { age: '21', amount: 'AED 50k–100k', pct: 1 },
-  { age: '24', amount: 'AED 150k–250k', pct: 3 },
-  { age: '27', amount: 'AED 490k–600k', pct: 6 },
-  { age: '29', amount: 'AED 950k–1.2M', pct: 11 },
-  { age: '31', amount: 'AED 1.5M 🏆', pct: 16 },
-  { age: '33', amount: 'AED 3M–4M', pct: 26 },
-  { age: '35', amount: 'AED 6M–8M', pct: 38 },
-  { age: '37', amount: 'AED 10M–12M', pct: 52 },
-  { age: '40', amount: 'AED 12M–15M', pct: 60 },
-  { age: '47', amount: 'AED 30M–40M', pct: 74 },
-  { age: '52', amount: 'AED 60M–80M', pct: 87 },
-  { age: '57', amount: 'AED 370M–743M', pct: 100 },
-];
-
-const wbars = document.getElementById('wealth-bars');
-wealthData.forEach((w, i) => {
-  wbars.innerHTML += `
-    <div class="wealth-row" style="transition-delay:${i * 0.05}s" data-pct="${w.pct}">
-      <div class="wealth-age">${w.age}</div>
-      <div class="wealth-bar-track"><div class="wealth-bar-fill" data-pct="${w.pct}"></div></div>
-      <div class="wealth-amount">${w.amount}</div>
-    </div>`;
-});
-
-// ── INTERSECTION OBSERVER ──
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      // animate wealth bars
-      const fill = entry.target.querySelector?.('.wealth-bar-fill');
-      if (fill) {
-        setTimeout(() => fill.style.width = fill.dataset.pct + '%', 100);
-      }
+/* ============================
+   LOADER PARTICLE RING
+   ============================ */
+(function(){
+  const c=document.getElementById('lc'),ctx=c.getContext('2d');
+  const rsz=()=>{c.width=innerWidth;c.height=innerHeight};
+  rsz();window.addEventListener('resize',rsz);
+  let t=0;
+  (function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    const cx=c.width/2,cy=c.height/2;
+    for(let i=0;i<3;i++){
+      ctx.beginPath();
+      ctx.arc(cx,cy,90+i*65,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(78,204,163,${0.03-i*.008})`;
+      ctx.lineWidth=1;ctx.stroke();
+      const a=t*(0.5-i*.1)+i*Math.PI*2/3;
+      const dx=cx+Math.cos(a)*(90+i*65),dy=cy+Math.sin(a)*(90+i*65);
+      ctx.beginPath();ctx.arc(dx,dy,3.5-i*.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(78,204,163,${0.7-i*.15})`;
+      ctx.shadowBlur=14;ctx.shadowColor='#4ECCA3';ctx.fill();ctx.shadowBlur=0;
     }
+    // Orbiting gold dots
+    for(let i=0;i<5;i++){
+      const a2=-t*.3+i*Math.PI*2/5;
+      const px=cx+Math.cos(a2)*180,py=cy+Math.sin(a2)*180;
+      ctx.beginPath();ctx.arc(px,py,1.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(201,168,76,0.4)`;ctx.fill();
+    }
+    t+=.022;requestAnimationFrame(draw);
+  })();
+})();
+ 
+/* LOADER DISMISS */
+document.body.style.overflow='hidden';
+setTimeout(()=>{document.getElementById('loader').classList.add('out');document.body.style.overflow='';},5500);
+ 
+/* SCROLL PROGRESS */
+window.addEventListener('scroll',()=>{
+  document.getElementById('prog').style.width=(window.scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';
+},{passive:true});
+ 
+/* CURSOR */
+const cur=document.getElementById('cur'),ring=document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function ac(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=Math.round(rx)+'px';ring.style.top=Math.round(ry)+'px';requestAnimationFrame(ac);})();
+ 
+/* ============================
+   THREE.JS — ULTRA 3D SCENE
+   ============================ */
+(function(){
+  const canvas=document.getElementById('tc');
+  const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  R.setPixelRatio(Math.min(devicePixelRatio,2));
+  R.setSize(innerWidth,innerHeight);R.setClearColor(0,0);
+  const S=new THREE.Scene();
+  const C=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,1000);
+  C.position.z=6;
+  let mx=0,my=0,tx=0,ty=0,sy=0;
+  document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2;});
+  window.addEventListener('scroll',()=>sy=scrollY,{passive:true});
+ 
+  /* TORUS KNOT — main feature */
+  const tk=new THREE.Mesh(
+    new THREE.TorusKnotGeometry(1.3,.3,200,28,2,3),
+    new THREE.MeshBasicMaterial({color:0x4ECCA3,wireframe:true,transparent:true,opacity:.16})
+  );
+  S.add(tk);
+  const tk2=new THREE.Mesh(
+    new THREE.TorusKnotGeometry(.85,.14,140,20,3,4),
+    new THREE.MeshBasicMaterial({color:0xC9A84C,wireframe:true,transparent:true,opacity:.11})
+  );
+  S.add(tk2);
+  const tk3=new THREE.Mesh(
+    new THREE.TorusKnotGeometry(1.9,.06,100,12,5,7),
+    new THREE.MeshBasicMaterial({color:0x4ECCA3,wireframe:true,transparent:true,opacity:.05})
+  );
+  S.add(tk3);
+ 
+  /* CAGE ICOSAHEDRON */
+  const cage=new THREE.Mesh(
+    new THREE.IcosahedronGeometry(3.4,1),
+    new THREE.MeshBasicMaterial({color:0x4ECCA3,wireframe:true,transparent:true,opacity:.035})
+  );
+  S.add(cage);
+ 
+  /* PARTICLES */
+  const N=600;const pos=new Float32Array(N*3),col=new Float32Array(N*3),vel=[];
+  for(let i=0;i<N;i++){
+    const phi=Math.acos(2*Math.random()-1),th=Math.random()*Math.PI*2,r=3.5+Math.random()*5;
+    pos[i*3]=r*Math.sin(phi)*Math.cos(th);pos[i*3+1]=r*Math.sin(phi)*Math.sin(th);pos[i*3+2]=r*Math.cos(phi);
+    vel.push({x:(Math.random()-.5)*.004,y:(Math.random()-.5)*.004,z:(Math.random()-.5)*.003});
+    if(Math.random()>.45){col[i*3]=.306;col[i*3+1]=.8;col[i*3+2]=.639}
+    else{col[i*3]=.79;col[i*3+1]=.66;col[i*3+2]=.3}
+  }
+  const pg=new THREE.BufferGeometry();
+  pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  pg.setAttribute('color',new THREE.BufferAttribute(col,3));
+  const pts=new THREE.Points(pg,new THREE.PointsMaterial({size:.038,vertexColors:true,transparent:true,opacity:.75}));
+  S.add(pts);
+ 
+  /* RINGS */
+  const addRing=(r,t,c,o,rx=0,ry=0)=>{
+    const m=new THREE.Mesh(new THREE.TorusGeometry(r,t,8,120),new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:o}));
+    m.rotation.x=rx;m.rotation.y=ry;S.add(m);return m;
+  };
+  const rings=[
+    addRing(3.9,.006,0x4ECCA3,.2,Math.PI/4,0),
+    addRing(4.6,.004,0xC9A84C,.1,-Math.PI/4,Math.PI/5),
+    addRing(2.6,.005,0x4ECCA3,.14,Math.PI/2,Math.PI/7),
+    addRing(5.2,.003,0xE8C97A,.06,Math.PI/6,-Math.PI/3),
+  ];
+ 
+  /* ORBITING SPHERES */
+  const orbs=[];
+  for(let i=0;i<8;i++){
+    const m=new THREE.Mesh(new THREE.SphereGeometry(.05,8,8),new THREE.MeshBasicMaterial({color:i%2?0x4ECCA3:0xC9A84C,transparent:true,opacity:.85}));
+    orbs.push({m,r:2+i*.35,spd:.4+i*.16,off:i*Math.PI*2/8});S.add(m);
+  }
+ 
+  /* DNA HELIX */
+  const hp1=[],hp2=[];
+  for(let i=0;i<90;i++){const t2=i/90*Math.PI*7-Math.PI*3.5;hp1.push(new THREE.Vector3(Math.cos(t2)*2,t2*.3,Math.sin(t2)*2));hp2.push(new THREE.Vector3(Math.cos(t2+Math.PI)*2,t2*.3,Math.sin(t2+Math.PI)*2));}
+  const hg=new THREE.Group();
+  hg.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(hp1),new THREE.LineBasicMaterial({color:0x4ECCA3,transparent:true,opacity:.16})));
+  hg.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(hp2),new THREE.LineBasicMaterial({color:0xC9A84C,transparent:true,opacity:.12})));
+  // Cross bars
+  for(let i=0;i<hp1.length;i+=6){
+    hg.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([hp1[i],hp2[i]]),new THREE.LineBasicMaterial({color:0x4ECCA3,transparent:true,opacity:.08})));
+  }
+  hg.position.set(4.5,0,0);S.add(hg);
+ 
+  /* NODE NETWORK */
+  const nodes=[];
+  for(let i=0;i<18;i++)nodes.push(new THREE.Vector3((Math.random()-.5)*13,(Math.random()-.5)*12,(Math.random()-.5)*4));
+  nodes.forEach((a,i)=>nodes.forEach((b,j)=>{
+    if(j<=i)return;const d=a.distanceTo(b);
+    if(d<5){S.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:0x4ECCA3,transparent:true,opacity:(1-d/5)*.18})));}
+  }));
+ 
+  window.addEventListener('resize',()=>{C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();R.setSize(innerWidth,innerHeight);});
+ 
+  const clk=new THREE.Clock();
+  (function anim(){
+    requestAnimationFrame(anim);
+    const t=clk.getElapsedTime(),sf=sy*.0008;
+    tx+=(mx-tx)*.04;ty+=(my-ty)*.04;
+ 
+    tk.rotation.x=t*.09+ty*.42;tk.rotation.y=t*.13+tx*.58;tk.rotation.z=t*.04;
+    tk2.rotation.x=-t*.11+ty*.32;tk2.rotation.y=t*.08-tx*.38;
+    tk3.rotation.x=t*.06+ty*.2;tk3.rotation.y=-t*.1+tx*.25;
+ 
+    cage.rotation.x=t*.04+ty*.08;cage.rotation.y=t*.055+tx*.08;
+    const br=1+Math.sin(t*.65)*.045;cage.scale.set(br,br,br);
+ 
+    // Particle drift
+    const pa=pts.geometry.attributes.position.array;
+    for(let i=0;i<N;i++){
+      pa[i*3]+=vel[i].x;pa[i*3+1]+=vel[i].y;pa[i*3+2]+=vel[i].z;
+      const d=Math.sqrt(pa[i*3]**2+pa[i*3+1]**2+pa[i*3+2]**2);
+      if(d>9.5||d<2){vel[i].x*=-1;vel[i].y*=-1;vel[i].z*=-1;}
+    }
+    pts.geometry.attributes.position.needsUpdate=true;
+    pts.rotation.y=t*.014+tx*.09;pts.rotation.x=sf*.25+ty*.05;
+ 
+    rings[0].rotation.z=t*.09;rings[0].rotation.x=Math.PI/4+ty*.18;
+    rings[1].rotation.z=-t*.065;rings[1].rotation.y=tx*.14;
+    rings[2].rotation.y=t*.11+tx*.22;
+    rings[3].rotation.x=t*.05+ty*.1;rings[3].rotation.z=t*.035;
+ 
+    orbs.forEach((o,i)=>{const a=t*o.spd+o.off;o.m.position.x=Math.cos(a)*o.r;o.m.position.y=Math.sin(a*.7)*o.r*.45;o.m.position.z=Math.sin(a)*o.r*.55;const sc=.7+.5*Math.sin(t*2.2+i);o.m.scale.set(sc,sc,sc);});
+ 
+    hg.rotation.y=t*.18+tx*.28;hg.position.x=4.5+tx*.4;
+ 
+    C.position.x+=(tx*.4-C.position.x)*.05;
+    C.position.y+=(-ty*.3-C.position.y)*.05;
+    C.position.z=6+sf*.7;C.lookAt(S.position);
+ 
+    R.render(S,C);
+  })();
+})();
+ 
+/* ============================
+   AMBIENT BACKGROUND
+   ============================ */
+(function(){
+  const c=document.getElementById('bgc'),ctx=c.getContext('2d');
+  const rsz=()=>{c.width=innerWidth;c.height=innerHeight};rsz();window.addEventListener('resize',rsz);
+  const orbs=Array.from({length:9},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.14,vy:(Math.random()-.5)*.12,r:Math.random()*200+80,c:Math.random()>.5?'78,204,163':'201,168,76',a:Math.random()*.014+.004}));
+  (function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.fillStyle='#040404';ctx.fillRect(0,0,c.width,c.height);
+    orbs.forEach(o=>{
+      o.x=(o.x+o.vx+c.width)%c.width;o.y=(o.y+o.vy+c.height)%c.height;
+      const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
+      g.addColorStop(0,`rgba(${o.c},${o.a})`);g.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=g;ctx.fillRect(0,0,c.width,c.height);
+    });
+    requestAnimationFrame(draw);
+  })();
+})();
+ 
+/* ============================
+   SCROLL REVEAL
+   ============================ */
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});},{threshold:.07,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv,.rvl,.rvs,.eitem,.ccard,.spill,.editem,.pcard').forEach((el,i)=>{if(!el.style.transitionDelay)el.style.transitionDelay=(i%7)*.055+'s';obs.observe(el);});
+document.querySelectorAll('.ccard').forEach((c,i)=>c.style.transitionDelay=(i%5)*.05+'s');
+document.querySelectorAll('.spill').forEach((c,i)=>c.style.transitionDelay=i*.038+'s');
+ 
+/* ============================
+   3D CARD TILT
+   ============================ */
+document.querySelectorAll('.pcard,.sc,.ccard').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    card.style.transition='transform .12s ease';
+    card.style.transform=`perspective(900px) rotateY(${x*15}deg) rotateX(${-y*11}deg) translateZ(12px) scale(1.015)`;
+    if(card.classList.contains('pcard')){card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');}
   });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.timeline-item, .rule-item, .wealth-row').forEach(el => obs.observe(el));
-
-// ── PARALLAX HERO ──
-window.addEventListener('scroll', () => {
-  const hero = document.getElementById('hero');
-  const sy = window.scrollY;
-  const bgText = hero.querySelector('.hero-bg-text');
-  if (bgText) bgText.style.transform = `translateY(calc(-50% + ${sy * 0.3}px))`;
+  card.addEventListener('mouseleave',()=>{card.style.transition='transform .7s cubic-bezier(0.16,1,0.3,1)';card.style.transform='perspective(900px) rotateY(0) rotateX(0) translateZ(0) scale(1)';});
 });
+ 
+/* ============================
+   CLICK RIPPLE (hidden touch)
+   ============================ */
+const rs=document.createElement('style');
+rs.textContent='@keyframes ripple{to{width:90px;height:90px;opacity:0}}';
+document.head.appendChild(rs);
+document.addEventListener('click',e=>{
+  const d=document.createElement('div');
+  d.style.cssText=`position:fixed;width:4px;height:4px;border-radius:50%;border:1px solid rgba(78,204,163,.8);left:${e.clientX}px;top:${e.clientY}px;transform:translate(-50%,-50%);pointer-events:none;z-index:9990;animation:ripple .7s ease forwards`;
+  document.body.appendChild(d);setTimeout(()=>d.remove(),700);
+});
+ 
+/* ============================
+   HIDDEN TEXT SCRAMBLE
+   ============================ */
+const CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+function scramble(el){
+  const orig=el.textContent;let iter=0;
+  const iv=setInterval(()=>{
+    el.textContent=orig.split('').map((c,i)=>{if(c===' ')return ' ';if(i<iter/2)return orig[i];return CHARS[Math.floor(Math.random()*CHARS.length)];}).join('');
+    if(++iter>orig.length*2){el.textContent=orig;clearInterval(iv);}
+  },28);
+}
+document.querySelectorAll('.erole,.ednm,.lname,.pname').forEach(el=>el.addEventListener('mouseenter',()=>scramble(el)));
+ 
+/* ============================
+   NAV SECTION FLASH TRANSITION
+   ============================ */
+document.querySelectorAll('nav ul a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const tgt=document.querySelector(a.getAttribute('href'));
+    if(!tgt)return;
+    const pt=document.getElementById('pt');
+    pt.style.transition='transform .38s cubic-bezier(0.76,0,0.24,1)';
+    pt.style.transformOrigin='bottom';pt.style.transform='scaleY(1)';
+    setTimeout(()=>{tgt.scrollIntoView({behavior:'instant'});pt.style.transformOrigin='top';setTimeout(()=>{pt.style.transform='scaleY(0)';},50);},380);
+  });
+});
+ 
+/* ============================
+   KONAMI CODE
+   ============================ */
+const K=[38,38,40,40,37,39,37,39,66,65];let ki=0;
+document.addEventListener('keydown',e=>{
+  if(e.keyCode===K[ki]){if(++ki===K.length){document.getElementById('km').classList.add('show');ki=0;}}else ki=0;
+  // Secret: press D = teal flash
+  if(e.key.toLowerCase()==='d'){document.body.style.transition='filter .2s';document.body.style.filter=document.body.style.filter?'':'hue-rotate(40deg)';setTimeout(()=>{document.body.style.filter='';},600);}
+});
+ 
+/* ============================
+   HIDDEN: TAB TITLE GLITCH
+   ============================ */
+const titles=['DESAI.exe','D̷H̷A̷I̷R̷Y̷A̷','Dezai://','17.builder','DUBAI ↗','loading...'];
+let ti=0;
+document.addEventListener('visibilitychange',()=>{
+  document.title=document.hidden?titles[ti++%titles.length]:'Dhairya Desai — Founder · Innovator · Visionary';
+});
+ 
+/* ============================
+   HIDDEN: HERO BG TEXT PARALLAX
+   ============================ */
+const hbg=document.querySelector('.hbgt');
+window.addEventListener('scroll',()=>{if(hbg)hbg.style.transform=`translate(-50%,calc(-50% + ${scrollY*.12}px)) scale(${1+scrollY*.0002})`;},{passive:true});
+ 
+/* MOBILE NAV */
+document.getElementById('ntog').addEventListener('click',()=>document.getElementById('nlinks').classList.toggle('open'));
+document.querySelectorAll('#nlinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nlinks').classList.remove('open')));
 </script>
 </body>
 </html>
